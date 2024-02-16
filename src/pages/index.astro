@@ -1,0 +1,136 @@
+---
+import { marked } from "marked";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import { siteTitle, siteTagline } from "@config";
+import Layout from "../layouts/BaseLayout.astro";
+import FancyUnderline from "@components/FancyUnderline.astro";
+import MediaPlayer from "@components/MediaPlayer";
+
+import getSeparateFirstWord from "../lib/getSeparateFirstWord";
+
+import {
+  frontmatter as HeroFrontmatter,
+  Content as HeroContent,
+} from "../content/page-partials/hero.md";
+import { Content as BioContent } from "../content/page-partials/bio.md";
+import { Content as MusicContent } from "../content/page-partials/music.md";
+
+import ImageBradleyBrick from "../assets/img/bradley/bradley-brick.jpg";
+import ImageBradleyHeadshot from "../assets/img/bradley/bradley-headshot4.jpg";
+
+type TCta = {
+  text: string;
+  href: string;
+};
+
+const allVideoTracks = await getCollection("video-tracks");
+const allAudioTracks = await getCollection("audio-tracks");
+const videoList = await Promise.all(
+  allVideoTracks.map(async (item) => {
+    const { data } = item;
+    console.log(data)
+    const content = await marked.parse(item.body);
+    return { ...data, list: "video-tracks", notes: content };
+  }),
+);
+const audioList = await Promise.all(
+  allAudioTracks.map(async (item) => {
+    const { data } = item;
+    const content = await marked.parse(item.body);
+    return { ...data, list: "audio-tracks", notes: content };
+  }),
+);
+---
+
+<Layout>
+  <div class="grid gap-20 lg:gap-32 xl:gap-40">
+    <!-- HERO BLURB SECTION --------------------------------------------------------------------------------- -->
+    <section class="container grid gap-10 lg:grid-cols-2">
+      <div class="full-bleed">
+        <Image src={ImageBradleyBrick} alt="" class="sticky top-0" />
+      </div>
+      <div class="xl:p-10 2xl:p-14">
+        <div class="mb-10 lg:mb-16 xl:mb-20">
+          <p
+            class="text-center font-alternate text-3xl font-medium uppercase lg:text-left xl:text-4xl"
+          >
+            {siteTitle}
+          </p>
+          <p
+            class="text-center font-alternate text-2xl lg:text-left xl:text-3xl"
+          >
+            {siteTagline}
+          </p>
+        </div>
+        <div class="prose prose-xl prose-gray prose-invert">
+          <HeroContent />
+        </div>
+        <ul class="mt-12 grid gap-6">
+          {
+            HeroFrontmatter.cta.map((item: TCta) => (
+              <li class="text-3xl font-bold">
+                <a href={item.href}>
+                  <FancyUnderline>
+                    {getSeparateFirstWord(item.text).first}
+                  </FancyUnderline>{" "}
+                  <span class="font-normal text-gray-200">
+                    {getSeparateFirstWord(item.text).rest}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mt-20 flex justify-center">
+          <div class="w-10 animate-bounce">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+              class="fill-current"
+              ><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+              ></path></svg
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIO SECTION ---------------------------------------------------------------------------------------- -->
+    <section class="container grid gap-10 lg:grid-cols-2" id="section-bio">
+      <div>
+        <div
+          class="prose prose-gray prose-invert pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium lg:p-10 lg:pl-0"
+        >
+          <BioContent />
+        </div>
+      </div>
+      <div class="full-bleed">
+        <Image src={ImageBradleyHeadshot} alt="" class="sticky top-0" />
+      </div>
+    </section>
+
+    <!-- MUSIC SECTION -------------------------------------------------------------------------------------- -->
+    <section class="container grid" id="section-music">
+      <div class="">
+        <div class="grid gap-y-10">
+          <div
+            class="prose prose-gray prose-invert prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
+          >
+            <MusicContent />
+          </div>
+          <MediaPlayer
+            playlists={[
+              { heading: "Video Tracks.", playlist: videoList },
+              { heading: "Audio Tracks.", playlist: audioList },
+            ]}
+            client:idle
+            client:only="react"
+          />
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

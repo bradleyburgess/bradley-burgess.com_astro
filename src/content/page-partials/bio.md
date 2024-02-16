@@ -1,0 +1,36 @@
+## Biography.
+
+Praised for his “virtuoso piano playing” and his ability to leave audiences
+“spellbound” (ClassicSA), Bradley Burgess is one of today’s few concert artists
+who can move seamlessly between the piano bench and organ console, and enjoys a
+multifaceted career as pianist, organist, educator, and church musician.
+
+He has appeared in recital in many major venues of his home country of South
+Africa, as well as in the UK, Finland, and across the United States, including
+performances at Church of the Transfiguration (New York, NY), Third Baptist
+Church (St. Louis, MO), St. Peter’s Church (Long Island, NY), Rutgers University
+(Camden, NJ), Woolsey Hall (New Haven, CT), St. George’s Cathedral, Baxter
+Concert Hall (Cape Town, South Africa), and King’s Chapel (Boston, MA).
+
+Highlights of the 2023–24 season include appearances at Holy Name of Jesus
+Cathedral’s Sacred Music Series (Raleigh, NC), performances for North Carolina
+Chamber Music Institute faculty concerts, and collaboration with the Choir of
+St. Michael’s Episcopal Church in Raleigh, and the Schola Cantorum of the
+Diocese of East Carolina.
+
+Bradley holds undergraduate and graduate degrees in piano performance from the
+Manhattan School of Music in New York City, the University of Cape Town, and
+Yale University’s Institute of Sacred Music and School of Music, where he was
+awarded the Julie B. Sherman Prize for excellence in organ playing. He has also
+been the recipient of First Prize at the Fine Music Radio / Pick ‘n Pay 101.3
+Music Awards, the Oppenheimer Memorial Trust Bursary, and a generous grant from
+the National Arts Council of South Africa.
+
+Having served as Director of Music & Organist at St. Mark’s Episcopal Church
+(Islip, NY), Minister of Music at Middlebury Congregational Church (Middlebury,
+CT), Organ Scholar at Yale Divinity School’s Marquand Chapel, and Associate
+Director of Music and Worship Arts at Edenton Street United Methodist Church
+(Raleigh, NC), Bradley currently serves as Lay Associate for Music,
+Communications and Administration at Church of the Nativity in Raleigh, NC. He
+is also a faculty member of North Carolina Chamber Music Institute, and
+maintains a studio of private students.

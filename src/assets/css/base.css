@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .full-bleed {
+    position: relative;
+    width: calc(100% + 2rem);
+    left: -1rem;
+    @media screen(sm) {
+      position: static;
+      width: auto;
+      left: auto;
+    }
+  }
+}

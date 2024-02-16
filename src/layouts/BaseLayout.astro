@@ -1,0 +1,86 @@
+---
+import {
+  siteBaseUrl,
+  siteTitle,
+  siteTagline,
+  siteDescription,
+  mainNavList,
+} from "@config";
+import "../assets/css/base.css";
+
+interface Props {
+  description?: string;
+  title?: string;
+}
+
+const { description, title } = Astro.props;
+
+const pageTitle = title
+  ? `${title} | ${siteTitle}`
+  : `${siteTitle} | ${siteTagline}`;
+const pageDescription = description ? description : siteDescription;
+let pageOgImage;
+---
+
+<!doctype html>
+<html
+  lang="en"
+  class="h-full min-h-full scroll-pt-20 scroll-smooth bg-gray-950 text-gray-50"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={pageDescription} />
+    <title>{pageTitle}</title>
+    <link
+      rel="shortcut icon"
+      href="/favicon.ico"
+      sizes="any"
+      type="image/x-icon"
+    />
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`${siteBaseUrl}${Astro.url.pathname}`} />
+    <meta
+      property="og:image"
+      content={pageOgImage ? pageOgImage : `${siteBaseUrl}/default-og.jpg`}
+    />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body class="flex min-h-full flex-col">
+    <header class="sticky top-0 z-10 pb-10">
+      <div
+        class="container flex flex-col items-center bg-gray-950 py-2 lg:flex-row lg:justify-between"
+      >
+        <a href={Astro.url.pathname === "/" ? "#" : "/"} class="font-alternate"
+          ><span class="font-medium uppercase">{siteTitle}</span>
+          <span class="px-1 text-xl">|</span>
+          <span>{siteTagline}</span></a
+        >
+        <nav class="mt-1">
+          <ul class="flex gap-x-5 gap-y-1">
+            {
+              mainNavList.map((item) => (
+                <li>
+                  <a href={item.href}>{item.name}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="grow">
+      <slot />
+    </main>
+    <footer class="mt-20">
+      <div class="py-2 lg:py-4">
+        <div class="text-center">
+          Copyright © {new Date().getFullYear()}. {siteTitle}.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
