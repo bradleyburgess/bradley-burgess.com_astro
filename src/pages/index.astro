@@ -2,7 +2,7 @@
 import { marked } from "marked";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import { siteTitle, siteTagline } from "@config";
+import { siteTitle, siteTagline } from "../config";
 import Layout from "../layouts/BaseLayout.astro";
 import FancyUnderline from "../components/FancyUnderline.astro";
 import MediaPlayer from "../components/MediaPlayer";
@@ -150,10 +150,14 @@ const audioList = await Promise.all(
           <TeachingContent />
         </div>
         <div class="mt-10 rounded-xl bg-gray-900 p-4">
-          <h3 class="font-alternate text-gray-200 text-2xl font-normal text-center">
+          <h3
+            class="text-center font-alternate text-2xl font-normal text-gray-200"
+          >
             What my students are saying
           </h3>
-          <ul class="mt-10 flex list-none items-start gap-10 p-0 flex-col lg:flex-row xl:flex-col 2xl:flex-row">
+          <ul
+            class="mt-10 flex list-none flex-col items-start gap-10 p-0 lg:flex-row xl:flex-col 2xl:flex-row"
+          >
             {
               testimonialsList.map((item) => (
                 <li class="grid flex-1 gap-y-4">
