@@ -18,7 +18,10 @@ const ContactForm = () => {
     message: "",
   });
   const [hasJavascript, setHasJavascript] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<boolean | null>();
   const nameRef = useRef<HTMLInputElement>(null);
+  const questionRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setHasJavascript(true);
@@ -32,12 +35,22 @@ const ContactForm = () => {
   function handleFormSubmit(e: SubmitEvent) {
     e.preventDefault();
     console.log(formState);
+    setTimeout(() => {
+      setError(true);
+      setSubmitted(true);
+    }, 1000);
   }
 
-  useEffect(() => {
-    const subject = new URLSearchParams(window.location.search).get("subject");
-    if (subject) setFormState((state) => ({ ...state, subject }));
-  });
+  function successButtonClickHander() {
+    setSubmitted(false);
+    setFormState((state) => ({ ...state, message: "", subject: "" }));
+    setError(null);
+  }
+
+  function errorButtonClickHandler() {
+    setSubmitted(false);
+    setError(null);
+  }
 
   function handleContactSubjectEvent(e: CustomEvent) {
     setFormState((state) => ({ ...state, subject: e.detail }));
@@ -45,6 +58,11 @@ const ContactForm = () => {
       nameRef.current?.focus();
     }, 100);
   }
+
+  useEffect(() => {
+    const subject = new URLSearchParams(window.location.search).get("subject");
+    if (subject) setFormState((state) => ({ ...state, subject }));
+  });
 
   useEffect(() => {
     window.addEventListener(
@@ -65,7 +83,11 @@ const ContactForm = () => {
     }
   }, []);
 
-  return hasJavascript ? (
+  return submitted && !error ? (
+    <ContactSuccess buttonClickHandler={successButtonClickHander} />
+  ) : submitted && error ? (
+    <ContactError buttonClickHandler={errorButtonClickHandler} />
+  ) : (
     <form
       method="post"
       onSubmit={handleFormSubmit}
@@ -108,10 +130,19 @@ const ContactForm = () => {
           required
         ></Textarea>
       </Label>
+      <label htmlFor="question" className="sr-only">
+        Leave this unchanged:{" "}
+        <input
+          type="text"
+          name="question"
+          id="question"
+          className="sr-only"
+          value={import.meta.env.PUBLIC_CONTACT_FORM_KEY ?? ""}
+          ref={questionRef}
+        />
+      </label>
       <Submit value="Submit" />
     </form>
-  ) : (
-    <div className="no-js-hidden">This page requires Javascript.</div>
   );
 };
 
@@ -195,5 +226,99 @@ const labelize = (text: string): string =>
   text
     .split("")
     .reduce((a, c, i) => (i === 0 ? a + c.toUpperCase() : a + c), "") + ": ";
+
+const Button = ({ buttonClickHandler }: IContactSuccessProps) => (
+  <button
+    className="w-full rounded-2xl bg-gray-900 p-2 px-10 transition-colors duration-100 hover:bg-gray-800"
+    onClick={buttonClickHandler}
+  >
+    Send another message.
+  </button>
+);
+
+interface IContactSuccessProps {
+  buttonClickHandler?: (e: MouseEvent) => void;
+}
+const ContactSuccess = ({ buttonClickHandler }: IContactSuccessProps) => {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  function handleClick(e: Event) {
+    const target = e.target as HTMLVideoElement;
+    if (target.paused) return target.play();
+    return target.pause();
+  }
+
+  return (
+    <div className="prose prose-gray prose-invert">
+      <p>
+        <span className="font-semibold text-gray-50">Success!</span> Your email
+        was sent. I'll be in touch soon.
+      </p>
+      <button
+        className="w-full rounded-2xl bg-gray-900 p-2 px-10 transition-colors duration-100 hover:bg-gray-800"
+        onClick={buttonClickHandler}
+      >
+        Send another message.
+      </button>
+      <video
+        disableRemotePlayback
+        autoplay
+        onClick={handleClick}
+        ref={ref}
+        loop
+      >
+        <source src="/video/thank-you.mp4" />
+        <track
+          label="English"
+          kind="subtitles"
+          srclang="en"
+          default
+          src="/video/thank-you.vtt"
+        />
+      </video>
+    </div>
+  );
+};
+
+const ContactError = ({ buttonClickHandler }: IContactSuccessProps) => {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  function handleClick(e: Event) {
+    const target = e.target as HTMLVideoElement;
+    if (target.paused) return target.play();
+    return target.pause();
+  }
+
+  return (
+    <div className="prose prose-gray prose-invert">
+      <p class="text-red-500">
+        <span className="font-bold text-red-500">Yikes!</span> It seems
+        there was an error.
+      </p>
+      <button
+        className="w-full rounded-2xl bg-gray-900 p-2 px-10 transition-colors duration-100 hover:bg-gray-800"
+        onClick={buttonClickHandler}
+      >
+        Try sending again.
+      </button>
+      <video
+        disableRemotePlayback
+        autoplay
+        onClick={handleClick}
+        ref={ref}
+        loop
+      >
+        <source src="/video/david.mp4" />
+        <track
+          label="English"
+          kind="subtitles"
+          srclang="en"
+          default
+          src="/video/david.vtt"
+        />
+      </video>
+    </div>
+  );
+};
 
 export default ContactForm;

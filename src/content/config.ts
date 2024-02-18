@@ -5,6 +5,7 @@ const videoTrackCollection = defineCollection({
   schema: z.object({
     composer: z.string(),
     date: z.string().optional(),
+    exclude: z.boolean().optional(),
     live: z.boolean().optional(),
     location: z.string().optional(),
     tags: z.array(z.string()),
@@ -19,6 +20,7 @@ const audioTrackCollection = defineCollection({
   schema: z.object({
     composer: z.string(),
     date: z.string().optional(),
+    exclude: z.boolean().optional(),
     live: z.boolean().optional(),
     location: z.string().optional(),
     tags: z.array(z.string()),

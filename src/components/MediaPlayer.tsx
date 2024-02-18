@@ -43,14 +43,9 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
   );
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasJavascript, setHasJavascript] = useState(false);
-  const {
-    inView,
-    ref: inViewRef,
-    entry,
-  } = useInView({
+  const { inView: mediaPlayerInView, ref: mediaPlayerRef } = useInView({
     triggerOnce: true,
   });
-
   const containerRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
@@ -65,6 +60,13 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
       e.preventDefault();
       (e.target as HTMLElement).setAttribute("open", "true");
     }
+  }
+
+  function handleResize(e: Event) {
+    if (window.innerWidth >= 1536)
+      detailsRef.current?.setAttribute("open", "true");
+    if (window.innerWidth < 1024)
+      detailsRef.current?.setAttribute("open", "false");
   }
 
   useEffect(() => {
@@ -94,13 +96,6 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
     }
   });
 
-  function handleResize(e: Event) {
-    if (window.innerWidth >= 1536)
-      detailsRef.current?.setAttribute("open", "true");
-    if (window.innerWidth < 1024)
-      detailsRef.current?.setAttribute("open", "false");
-  }
-
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -123,9 +118,9 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
       >
         <div
           className={`aspect-video w-[calc(100%_+_2rem)] 2xl:w-full 2xl:max-w-2xl ${currentTrack.type === "audio" ? "flex flex-col items-stretch justify-center" : ""}`}
-          ref={inViewRef}
+          ref={mediaPlayerRef}
         >
-          {inView && (
+          {mediaPlayerInView && (
             <Suspense fallback={() => <div>Loading player ...</div>}>
               {/* @ts-ignore-next-line */}
               <Plyr
@@ -160,7 +155,7 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
         </div>
       </div>
       <div className="grid gap-y-10 2xl:grid-cols-12 2xl:gap-x-6">
-        <div className="lg::max-xl:grid-cols-2 order-2 grid gap-y-10 2xl:order-1 2xl:col-span-8">
+        <div className="order-2 grid gap-y-10 lg:max-2xl:grid-cols-2 2xl:order-1 2xl:col-span-8">
           {playlists.map((list) => (
             <Playlist
               {...list}
@@ -174,29 +169,33 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
           <details
             onClick={handleDetailsClick}
             ref={detailsRef}
-            className="rounded-3xl border-2 border-gray-300 p-4 2xl:border-0 [&_svg]:open:-rotate-180"
+            className="sticky top-12 rounded-3xl bg-gray-900 p-4 [&_svg]:open:-rotate-180"
           >
-            <summary className="flex cursor-pointer list-none justify-between 2xl:cursor-auto">
+            <summary className="relative flex cursor-pointer list-none justify-between 2xl:cursor-auto">
               <h3 className="font-alternate text-xl font-semibold">
                 Now Playing.
               </h3>
-              <CaretIcon />
+              <div className="relative bottom-1">
+                <CaretIcon />
+              </div>
             </summary>
-            <div className="prose prose-sm prose-gray prose-invert mt-6">
-              <h4>
-                {currentTrack.composer}: {currentTrack.title}
-                {currentTrack.catalog && `, ${currentTrack.catalog}`}.
-              </h4>
-              {(currentTrack.location || currentTrack.date) && (
-                <p>
-                  Recorded {currentTrack.live && "live"}
-                  {currentTrack.date && " on " + currentTrack.date}.{" "}
-                  {currentTrack.location && <br />}
-                  {currentTrack.location && currentTrack.location + "."}
-                </p>
-              )}
+            <div className="prose prose-sm prose-gray prose-invert relative mt-10 max-w-none before:absolute before:-top-6 before:left-0 before:h-px before:w-full before:bg-gray-400 after:rounded-full lg:grid lg:grid-cols-2 lg:gap-x-4">
+              <div className="">
+                <h4 className="mt-0">
+                  {currentTrack.composer}: {currentTrack.title}
+                  {currentTrack.catalog && `, ${currentTrack.catalog}`}.
+                </h4>
+                {(currentTrack.location || currentTrack.date) && (
+                  <p>
+                    Recorded {currentTrack.live && "live"}
+                    {currentTrack.date && " on " + currentTrack.date}.{" "}
+                    {currentTrack.location && <br />}
+                    {currentTrack.location && currentTrack.location + "."}
+                  </p>
+                )}
+              </div>
               <div
-                className="prose prose-sm prose-gray prose-invert"
+                className="prose prose-sm prose-gray prose-invert max-w-none"
                 dangerouslySetInnerHTML={{ __html: currentTrack.notes }}
               ></div>
             </div>
@@ -227,22 +226,25 @@ export function Playlist(props: IPlaylistProps) {
           <li className="py-2 xl:py-1" key={item.list + index}>
             <a
               href={item.url}
-              className="flex flex-col items-start 2xl:flex-row 2xl:gap-x-4"
+              className="items-start lg:flex lg:flex-col 2xl:flex-row 2xl:gap-x-4"
               onClick={createClickHandler(item)}
             >
               <span
                 data-composer
-                className="inline-block font-semibold 2xl:w-[--composer-width]"
+                className="font-semibold lg:inline-block 2xl:w-[--composer-width]"
               >
                 {currentTrack == item && <NowPlayingIcon />}
                 {item.composer}:{" "}
               </span>
-              <span data-title className="inline-block 2xl:w-[--title-width]">
+              <span
+                data-title
+                className="lg:inline-block 2xl:w-[--title-width]"
+              >
                 {item.title}{" "}
               </span>
               <span
                 data-tags
-                className="inline-block font-alternate font-extralight italic 2xl:w-[--tags-width]"
+                className="font-alternate font-extralight italic lg:inline-block 2xl:w-[--tags-width]"
               >
                 ({item.tags.join(", ")})
               </span>

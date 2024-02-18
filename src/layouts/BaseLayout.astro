@@ -109,6 +109,17 @@ let pageOgImage;
           }
         },
       );
+
+      window.customElements.define(
+        "js-fallback",
+        class extends HTMLElement {
+          constructor() {
+            super();
+            this.innerHTML = "";
+            this.remove();
+          }
+        },
+      );
     </script>
   </body>
 </html>

@@ -8,6 +8,7 @@ import Layout from "../layouts/BaseLayout.astro";
 import FancyUnderline from "../components/FancyUnderline.astro";
 import MediaPlayer from "../components/MediaPlayer";
 import ContactForm from "../components/ContactForm";
+import InfoIcon from "../components/InfoIcon.astro";
 
 import getSeparateFirstWord from "../lib/getSeparateFirstWord";
 
@@ -32,8 +33,12 @@ type TCta = {
 
 const testimonialsList = await getCollection("testimonials");
 
-const allVideoTracks = await getCollection("video-tracks");
-const allAudioTracks = await getCollection("audio-tracks");
+const allVideoTracks = (await getCollection("video-tracks")).filter(
+  (item) => !item.data.exclude,
+);
+const allAudioTracks = (await getCollection("audio-tracks")).filter(
+  (item) => !item.data.exclude,
+);
 const videoList = await Promise.all(
   allVideoTracks.map(async (item) => {
     const { data } = item;
@@ -141,13 +146,27 @@ const audioList = await Promise.all(
           >
             <MusicContent />
           </div>
+          <js-fallback>
+            <div
+              class="prose prose-gray prose-invert rounded-2xl bg-gray-800 p-2 px-4 text-red-500"
+            >
+              <p>
+                <span
+                  class="relative top-[0.15em] mr-1 inline-block aspect-square w-4"
+                  ><InfoIcon /></span
+                >
+                The Media Player requires Javascript. Please go to my YouTube channel
+                for videos.
+              </p>
+            </div>
+          </js-fallback>
           <MediaPlayer
             playlists={[
               { heading: "Video Tracks.", playlist: videoList },
               { heading: "Audio Tracks.", playlist: audioList },
             ]}
-            client:only="preact"
             client:idle
+            client:only="preact"
           />
         </div>
       </div>
@@ -212,10 +231,27 @@ const audioList = await Promise.all(
     <section class="container grid gap-10 lg:grid-cols-2" id="section-contact">
       <div>
         <div
-          class="prose prose-gray prose-invert grid gap-y-4 pl-0 prose-h1:font-alternate prose-h1:text-4xl prose-h1:font-medium lg:p-10 lg:pl-0"
+          class="prose prose-gray prose-invert grid gap-y-4 pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium lg:p-10 lg:pl-0"
         >
           <ContactContent />
-          <ContactForm client:load />
+          <js-fallback>
+            <div
+              class="prose prose-gray prose-invert rounded-2xl bg-gray-800 p-2 px-4 text-red-500"
+            >
+              <p>
+                <span
+                  class="relative top-[0.15em] mr-1 inline-block aspect-square w-4"
+                  ><InfoIcon /></span
+                >
+                <span
+                  >The contact form requires Javascript. To prevent spam, I
+                  cannot put my email address. Please enable Javascript, or
+                  contact me via Telegram.</span
+                >
+              </p>
+            </div>
+          </js-fallback>
+          <ContactForm client:load client:only="preact" />
         </div>
       </div>
       <div class="full-bleed grid place-items-end">
