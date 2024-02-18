@@ -63,6 +63,7 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
   function handleDetailsClick(e: MouseEvent) {
     if (window.innerWidth >= 1536) {
       e.preventDefault();
+      (e.target as HTMLElement).setAttribute("open", "true");
     }
   }
 
@@ -92,6 +93,18 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
       detailsRef.current.setAttribute("open", "true");
     }
   });
+
+  function handleResize(e: Event) {
+    if (window.innerWidth >= 1536)
+      detailsRef.current?.setAttribute("open", "true");
+    if (window.innerWidth < 1024)
+      detailsRef.current?.setAttribute("open", "false");
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return hasJavascript ? (
     <div
@@ -214,7 +227,7 @@ export function Playlist(props: IPlaylistProps) {
           <li className="py-2 xl:py-1" key={item.list + index}>
             <a
               href={item.url}
-              className="flex flex-col 2xl:flex-row 2xl:gap-x-4"
+              className="flex flex-col items-start 2xl:flex-row 2xl:gap-x-4"
               onClick={createClickHandler(item)}
             >
               <span
