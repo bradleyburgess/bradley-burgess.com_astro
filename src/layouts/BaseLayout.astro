@@ -26,6 +26,7 @@ let pageOgImage;
 <html
   lang="en"
   class="h-full min-h-full scroll-pt-20 scroll-smooth bg-gray-950 text-gray-50"
+  data-js="false"
 >
   <head>
     <meta charset="UTF-8" />
@@ -39,6 +40,9 @@ let pageOgImage;
       type="image/x-icon"
     />
     <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      document.documentElement.setAttribute("data-js", "true");
+    </script>
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:type" content="website" />
@@ -48,6 +52,11 @@ let pageOgImage;
       content={pageOgImage ? pageOgImage : `${siteBaseUrl}/default-og.jpg`}
     />
     <meta name="twitter:card" content="summary" />
+    <style is:global>
+      [data-js="true"] .no-js-hidden {
+        display: none;
+      }
+    </style>
   </head>
   <body class="flex min-h-full flex-col">
     <header class="sticky top-0 z-10 pb-10">
@@ -82,5 +91,24 @@ let pageOgImage;
         </div>
       </div>
     </footer>
+    <script>
+      window.customElements.define(
+        "contact-autofill",
+        class extends HTMLElement {
+          constructor() {
+            super();
+            this.addEventListener("click", (e) => {
+              if ((e.target as HTMLElement).tagName === "A") {
+                window.dispatchEvent(
+                  new CustomEvent("contactsubject", {
+                    detail: this.getAttribute("subject"),
+                  }),
+                );
+              }
+            });
+          }
+        },
+      );
+    </script>
   </body>
 </html>

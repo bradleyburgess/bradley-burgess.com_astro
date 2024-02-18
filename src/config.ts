@@ -8,10 +8,10 @@ export const siteDescription =
   "Bradley Burgess is a South African-born, Raleigh-based pianist, organist, and church musician, whose playing has been described as “spell-binding”.";
 
 export const mainNavList = [
-  { name: "bio", href: "#section-bio" },
-  { name: "music", href: "#section-music" },
-  { name: "teaching", href: "/teaching" },
+  { name: "bio", href: "/#section-bio" },
+  { name: "music", href: "/#section-music" },
+  { name: "teaching", href: "/#section-teaching" },
   // { name: "shop", href: "/shop" },
   // { name: "blog", href: "/blog" },
-  { name: "contact", href: "/contact" },
+  { name: "contact", href: "/#section-contact" },
 ];

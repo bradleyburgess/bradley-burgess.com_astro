@@ -1,3 +1,9 @@
+---
+image:
+  src: ../../assets/img/bradley/bradley-headshot4.jpg
+  alt: Bradley smiling, sitting in front of a 5-manual organ
+---
+
 ## Biography.
 
 Praised for his “virtuoso piano playing” and his ability to leave audiences

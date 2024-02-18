@@ -1,9 +1,14 @@
 ---
+image:
+  src: ../../assets/img/bradley/bradley-brick.jpg
+  alt: Bradley, looking at the camera, sitting in front of an open-face red-brick wall
 cta:
   - text: "Read full bio."
     href: "#section-bio"
   - text: "Listen to or watch music."
     href: "#section-music"
+  - text: "Learn about teaching."
+    href: "#section-teaching"
 ---
 
 Bradley Burgess is a South African-born, Raleigh-based pianist, organist, church

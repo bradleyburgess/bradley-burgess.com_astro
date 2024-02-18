@@ -6,6 +6,7 @@ import { siteTitle, siteTagline } from "@config";
 import Layout from "../layouts/BaseLayout.astro";
 import FancyUnderline from "@components/FancyUnderline.astro";
 import MediaPlayer from "@components/MediaPlayer";
+import ContactForm from "@components/ContactForm";
 
 import getSeparateFirstWord from "../lib/getSeparateFirstWord";
 
@@ -15,21 +16,26 @@ import {
 } from "../content/page-partials/hero.md";
 import { Content as BioContent } from "../content/page-partials/bio.md";
 import { Content as MusicContent } from "../content/page-partials/music.md";
+import { Content as TeachingContent } from "../content/page-partials/teaching.mdx";
+import { Content as ContactContent } from "../content/page-partials/contact.md";
 
-import ImageBradleyBrick from "../assets/img/bradley/bradley-brick.jpg";
-import ImageBradleyHeadshot from "../assets/img/bradley/bradley-headshot4.jpg";
+import ImageBradleyBrick from "@assets/img/bradley/bradley-brick.jpg";
+import ImageBradleyHeadshot from "@assets/img/bradley/bradley-headshot4.jpg";
+import ImageBradleyHands from "@assets/img/bradley/bradley-manuals.jpg";
+import ImageBradleyOutside from "@assets/img/bradley/bradley-outside.jpg";
 
 type TCta = {
   text: string;
   href: string;
 };
 
+const testimonialsList = await getCollection("testimonials");
+
 const allVideoTracks = await getCollection("video-tracks");
 const allAudioTracks = await getCollection("audio-tracks");
 const videoList = await Promise.all(
   allVideoTracks.map(async (item) => {
     const { data } = item;
-    console.log(data)
     const content = await marked.parse(item.body);
     return { ...data, list: "video-tracks", notes: content };
   }),
@@ -44,7 +50,7 @@ const audioList = await Promise.all(
 ---
 
 <Layout>
-  <div class="grid gap-20 lg:gap-32 xl:gap-40">
+  <div class="grid gap-32 lg:gap-48 xl:gap-56">
     <!-- HERO BLURB SECTION --------------------------------------------------------------------------------- -->
     <section class="container grid gap-10 lg:grid-cols-2">
       <div class="full-bleed">
@@ -52,11 +58,11 @@ const audioList = await Promise.all(
       </div>
       <div class="xl:p-10 2xl:p-14">
         <div class="mb-10 lg:mb-16 xl:mb-20">
-          <p
+          <h1
             class="text-center font-alternate text-3xl font-medium uppercase lg:text-left xl:text-4xl"
           >
             {siteTitle}
-          </p>
+          </h1>
           <p
             class="text-center font-alternate text-2xl lg:text-left xl:text-3xl"
           >
@@ -127,9 +133,68 @@ const audioList = await Promise.all(
               { heading: "Audio Tracks.", playlist: audioList },
             ]}
             client:idle
-            client:only="react"
           />
         </div>
+      </div>
+    </section>
+
+    <!-- TEACHING SECTION ----------------------------------------------------------------------------------- -->
+    <section class="container grid gap-10 lg:grid-cols-2" id="section-teaching">
+      <div class="full-bleed">
+        <Image src={ImageBradleyHands} alt="" class="sticky top-10" />
+      </div>
+      <div class="lg:p-10">
+        <div
+          class="prose prose-gray prose-invert pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
+        >
+          <TeachingContent />
+        </div>
+        <div class="mt-10 rounded-xl bg-gray-900 p-4">
+          <h3 class="font-alternate text-gray-200 text-2xl font-normal text-center">
+            What my students are saying
+          </h3>
+          <ul class="mt-10 flex list-none items-start gap-10 p-0 flex-col lg:flex-row xl:flex-col 2xl:flex-row">
+            {
+              testimonialsList.map((item) => (
+                <li class="grid flex-1 gap-y-4">
+                  <div class="flex items-center gap-6">
+                    <Image
+                      src={item.data.image}
+                      alt=""
+                      width={200}
+                      height={200}
+                      class="aspect-square w-16 rounded-full"
+                    />
+                    <p class="flex flex-col gap-1 leading-3">
+                      <span class="font-alternate font-semibold">
+                        {item.data.name}
+                      </span>
+                      <span class="text-xs text-gray-400">
+                        {item.data.lessonType}
+                      </span>
+                    </p>
+                  </div>
+                  <p class="text-sm italic text-gray-300">{item.data.body}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION ------------------------------------------------------------------------------------ -->
+    <section class="container grid gap-10 lg:grid-cols-2" id="section-contact">
+      <div>
+        <div
+          class="prose prose-gray prose-invert grid gap-y-4 pl-0 prose-h1:font-alternate prose-h1:text-4xl prose-h1:font-medium lg:p-10 lg:pl-0"
+        >
+          <ContactContent />
+          <ContactForm client:load />
+        </div>
+      </div>
+      <div class="full-bleed grid place-items-end">
+        <Image src={ImageBradleyOutside} alt="" class="sticky top-0" />
       </div>
     </section>
   </div>
