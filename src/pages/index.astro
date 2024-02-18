@@ -54,7 +54,14 @@ const audioList = await Promise.all(
     <!-- HERO BLURB SECTION --------------------------------------------------------------------------------- -->
     <section class="container grid gap-10 lg:grid-cols-2">
       <div class="full-bleed">
-        <Image src={ImageBradleyBrick} alt="" class="sticky top-0" />
+        <Image
+          src={ImageBradleyBrick}
+          alt="Bradley looking at the camera, sitting in front of an open-face red brick wall"
+          loading="eager"
+          class="sticky top-0"
+          widths={[600, 800, 1000, 1200, 1600]}
+          sizes="(max-width: 1024px) 100%, (max-width: 1546px) 40%, 1200px"
+        />
       </div>
       <div class="xl:p-10 2xl:p-14">
         <div class="mb-10 lg:mb-16 xl:mb-20">
@@ -114,7 +121,13 @@ const audioList = await Promise.all(
         </div>
       </div>
       <div class="full-bleed">
-        <Image src={ImageBradleyHeadshot} alt="" class="sticky top-0" />
+        <Image
+          src={ImageBradleyHeadshot}
+          alt="Bradley smiling, sitting in front of a 5-manual organ"
+          class="sticky top-0"
+          widths={[600, 800, 1000, 1200, 1600]}
+          sizes="(max-width: 1024px) 100%, (max-width: 1546px) 40%, 1200px"
+        />
       </div>
     </section>
 
@@ -132,6 +145,7 @@ const audioList = await Promise.all(
               { heading: "Video Tracks.", playlist: videoList },
               { heading: "Audio Tracks.", playlist: audioList },
             ]}
+            client:only="preact"
             client:idle
           />
         </div>
@@ -141,7 +155,13 @@ const audioList = await Promise.all(
     <!-- TEACHING SECTION ----------------------------------------------------------------------------------- -->
     <section class="container grid gap-10 lg:grid-cols-2" id="section-teaching">
       <div class="full-bleed">
-        <Image src={ImageBradleyHands} alt="" class="sticky top-10" />
+        <Image
+          src={ImageBradleyHands}
+          alt="Close-up of Bradley's hands, playing on two different organ manuals"
+          class="sticky top-10"
+          widths={[600, 800, 1000, 1200, 1600]}
+          sizes="(max-width: 1024px) 100%, (max-width: 1546px) 40%, 1200px"
+        />
       </div>
       <div class="lg:p-10">
         <div

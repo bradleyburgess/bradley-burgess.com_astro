@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import { useInView } from "react-intersection-observer";
 import { Suspense, lazy } from "preact/compat";
 const Plyr = lazy(() => import("plyr-react"));
 import "plyr-react/plyr.css";
@@ -42,6 +43,14 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
   );
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasJavascript, setHasJavascript] = useState(false);
+  const {
+    inView,
+    ref: inViewRef,
+    entry,
+  } = useInView({
+    triggerOnce: true,
+  });
+
   const containerRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
@@ -101,37 +110,40 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
       >
         <div
           className={`aspect-video w-[calc(100%_+_2rem)] 2xl:w-full 2xl:max-w-2xl ${currentTrack.type === "audio" ? "flex flex-col items-stretch justify-center" : ""}`}
+          ref={inViewRef}
         >
-          <Suspense fallback={<div>Loading media player...</div>}>
-            {/* @ts-ignore-next-line */}
-            <Plyr
-              options={{
-                autoplay: isPlaying,
-                clickToPlay: true,
-              }}
-              source={
-                currentTrack.type === "youtube"
-                  ? {
-                      type: "video",
-                      sources: [
-                        {
-                          provider: "youtube",
-                          src: currentTrack.url.split("=")[1],
-                        },
-                      ],
-                    }
-                  : {
-                      type: "audio",
-                      sources: [
-                        {
-                          src: currentTrack.url,
-                          type: "audio/mp4",
-                        },
-                      ],
-                    }
-              }
-            />
-          </Suspense>
+          {inView && (
+            <Suspense fallback={() => <div>Loading player ...</div>}>
+              {/* @ts-ignore-next-line */}
+              <Plyr
+                options={{
+                  autoplay: isPlaying,
+                  clickToPlay: true,
+                }}
+                source={
+                  currentTrack.type === "youtube"
+                    ? {
+                        type: "video",
+                        sources: [
+                          {
+                            provider: "youtube",
+                            src: currentTrack.url.split("=")[1],
+                          },
+                        ],
+                      }
+                    : {
+                        type: "audio",
+                        sources: [
+                          {
+                            src: currentTrack.url,
+                            type: "audio/mp4",
+                          },
+                        ],
+                      }
+                }
+              />
+            </Suspense>
+          )}
         </div>
       </div>
       <div className="grid gap-y-10 2xl:grid-cols-12 2xl:gap-x-6">
