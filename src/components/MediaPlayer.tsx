@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "preact/hooks";
 import { useInView } from "react-intersection-observer";
 import { Suspense, lazy } from "preact/compat";
 const Plyr = lazy(() => import("plyr-react"));
-import "plyr-react/plyr.css";
 
 interface IPlaylistItem {
   catalog?: string;
@@ -127,6 +126,9 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
                 options={{
                   autoplay: isPlaying,
                   clickToPlay: true,
+                  youtube: {
+                    rel: 0,
+                  },
                 }}
                 source={
                   currentTrack.type === "youtube"
@@ -154,8 +156,8 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
           )}
         </div>
       </div>
-      <div className="grid gap-y-10 2xl:grid-cols-12 2xl:gap-x-6">
-        <div className="order-2 grid gap-y-10 lg:max-xl:grid-cols-2 2xl:order-1 2xl:col-span-8">
+      <div className="grid gap-y-12 2xl:grid-cols-12 2xl:gap-x-6">
+        <div className="order-2 grid gap-y-16 lg:max-xl:grid-cols-2 2xl:order-1 2xl:col-span-8">
           {playlists.map((list) => (
             <Playlist
               {...list}
@@ -169,7 +171,7 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
           <details
             onClick={handleDetailsClick}
             ref={detailsRef}
-            className="sticky top-12 rounded-3xl bg-gray-900 p-4 [&_svg]:open:-rotate-180"
+            className="sticky top-20 rounded-3xl bg-gray-900 p-4 [&_svg]:open:-rotate-180"
           >
             <summary className="relative flex cursor-pointer list-none justify-between 2xl:cursor-auto">
               <h3 className="font-alternate text-xl font-semibold">
@@ -179,7 +181,7 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
                 <CaretIcon />
               </div>
             </summary>
-            <div className="prose prose-sm prose-gray prose-invert relative mt-10 max-w-none before:absolute before:-top-6 before:left-0 before:h-px before:w-full before:bg-gray-400 after:rounded-full lg:grid lg:max-2xl:grid-cols-2 lg:gap-x-4">
+            <div className="prose prose-sm prose-gray prose-invert relative mt-10 max-w-none before:absolute before:-top-6 before:left-0 before:h-px before:w-full before:bg-gray-400 after:rounded-full lg:grid lg:gap-x-4 lg:max-2xl:grid-cols-2">
               <div className="">
                 <h4 className="mt-0">
                   {currentTrack.composer}: {currentTrack.title}

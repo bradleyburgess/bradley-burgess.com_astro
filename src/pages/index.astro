@@ -1,4 +1,5 @@
 ---
+import "plyr-react/plyr.css";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import { marked } from "marked";
@@ -19,7 +20,7 @@ import {
 import { Content as BioContent } from "../content/page-partials/bio.md";
 import { Content as MusicContent } from "../content/page-partials/music.md";
 import { Content as TeachingContent } from "../content/page-partials/teaching.mdx";
-import { Content as ContactContent } from "../content/page-partials/contact.md";
+import { Content as ContactContent } from "../content/page-partials/contact.mdx";
 
 import ImageBradleyBrick from "../assets/img/bradley/bradley-brick.jpg";
 import ImageBradleyHeadshot from "../assets/img/bradley/bradley-headshot4.jpg";
@@ -101,12 +102,12 @@ const audioList = await Promise.all(
             ))
           }
         </ul>
-        <div class="mt-20 flex justify-center">
-          <div class="w-10 animate-bounce">
+        <div class="mt-20 flex justify-center sticky bottom-10">
+          <div class="pt-8 pb-0 px-6 aspect-square rounded-3xl bg-gray-800 bg-opacity-50">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
-              class="fill-current"
+              class="fill-current w-10 animate-bounce"
               ><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
               <path
                 d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
@@ -185,23 +186,25 @@ const audioList = await Promise.all(
       </div>
       <div class="lg:p-10">
         <div
-          class="prose prose-gray prose-invert pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
+          class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
         >
-          <TeachingContent />
+          <div>
+            <TeachingContent />
+          </div>
         </div>
         <div class="mt-10 rounded-xl bg-gray-900 p-4">
           <h3
-            class="text-center font-alternate text-2xl font-normal text-gray-200"
+            class="relative text-center font-alternate text-xl font-normal text-gray-200 after:absolute after:-bottom-6 after:left-0 after:h-px after:w-full after:rounded-full after:bg-gray-400 sm:text-2xl"
           >
             What my students are saying
           </h3>
           <ul
-            class="mt-10 flex list-none flex-col items-start gap-10 md:max-lg:gap-y-14 p-0 md:flex-col xl:flex-col 2xl:flex-row"
+            class="mt-12 flex list-none flex-col items-start gap-10 p-0 md:flex-col md:max-lg:gap-y-14 xl:flex-col 2xl:flex-row"
           >
             {
               testimonialsList.map((item) => (
                 <li class="grid flex-1 gap-y-4 md:gap-x-10 md:max-lg:grid-cols-12">
-                  <div class="flex items-center gap-6 md:max-lg:gap-y-2 md:max-lg:col-span-3 md:max-lg:flex-col md:max-lg:text-center">
+                  <div class="flex items-center gap-6 md:max-lg:col-span-3 md:max-lg:flex-col md:max-lg:gap-y-2 md:max-lg:text-center">
                     <Image
                       src={item.data.image}
                       alt=""
@@ -233,9 +236,11 @@ const audioList = await Promise.all(
     <section class="container grid gap-10 lg:grid-cols-2" id="section-contact">
       <div>
         <div
-          class="prose prose-gray prose-invert grid gap-y-4 pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium lg:p-10 lg:pl-0"
+          class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium lg:p-10 lg:pl-0"
         >
-          <ContactContent />
+          <div>
+            <ContactContent />
+          </div>
           <js-fallback>
             <div
               class="prose prose-gray prose-invert rounded-2xl bg-gray-800 p-2 px-4 text-red-500"
@@ -246,9 +251,8 @@ const audioList = await Promise.all(
                   ><InfoIcon /></span
                 >
                 <span
-                  >The contact form requires Javascript. To prevent spam, I
-                  cannot put my email address. Please enable Javascript, or
-                  contact me via Telegram.</span
+                  >To prevent spam, the contact form requires Javascript. Please
+                  enable Javascript, or contact me via Telegram.</span
                 >
               </p>
             </div>
@@ -256,7 +260,7 @@ const audioList = await Promise.all(
           <ContactForm client:load client:only="preact" />
         </div>
       </div>
-      <div class="full-bleed grid place-items-end">
+      <div class="full-bleed grid place-items-center">
         <Image src={ImageBradleyOutside} alt="" class="sticky top-0" />
       </div>
     </section>

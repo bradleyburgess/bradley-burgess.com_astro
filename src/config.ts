@@ -1,3 +1,5 @@
+// import TelegramIcon from "./components/TelegramIcon";
+
 export const siteTitle = "Bradley Burgess";
 
 export const siteTagline = "pianist & organist";
@@ -15,3 +17,19 @@ export const mainNavList = [
   // { name: "blog", href: "/blog" },
   { name: "contact", href: "/#section-contact" },
 ];
+
+// type TContactLink = {
+//   name: string;
+//   icon: any;
+//   link: string;
+//   handle: string;
+// };
+
+// export const contactLinks: TContactLink[] = [
+//   {
+//     name: "Telegram",
+//     icon: TelegramIcon,
+//     handle: "@bburgess_keys",
+//     link: "https://t.me/bburgess_keys",
+//   },
+// ];
