@@ -4,9 +4,9 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import { siteTitle, siteTagline } from "@config";
 import Layout from "../layouts/BaseLayout.astro";
-import FancyUnderline from "@components/FancyUnderline.astro";
-import MediaPlayer from "@components/MediaPlayer";
-import ContactForm from "@components/ContactForm";
+import FancyUnderline from "../components/FancyUnderline.astro";
+import MediaPlayer from "../components/MediaPlayer";
+import ContactForm from "../components/ContactForm";
 
 import getSeparateFirstWord from "../lib/getSeparateFirstWord";
 
@@ -19,10 +19,10 @@ import { Content as MusicContent } from "../content/page-partials/music.md";
 import { Content as TeachingContent } from "../content/page-partials/teaching.mdx";
 import { Content as ContactContent } from "../content/page-partials/contact.md";
 
-import ImageBradleyBrick from "@assets/img/bradley/bradley-brick.jpg";
-import ImageBradleyHeadshot from "@assets/img/bradley/bradley-headshot4.jpg";
-import ImageBradleyHands from "@assets/img/bradley/bradley-manuals.jpg";
-import ImageBradleyOutside from "@assets/img/bradley/bradley-outside.jpg";
+import ImageBradleyBrick from "../assets/img/bradley/bradley-brick.jpg";
+import ImageBradleyHeadshot from "../assets/img/bradley/bradley-headshot4.jpg";
+import ImageBradleyHands from "../assets/img/bradley/bradley-manuals.jpg";
+import ImageBradleyOutside from "../assets/img/bradley/bradley-outside.jpg";
 
 type TCta = {
   text: string;
