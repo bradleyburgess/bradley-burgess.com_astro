@@ -155,7 +155,7 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
         </div>
       </div>
       <div className="grid gap-y-10 2xl:grid-cols-12 2xl:gap-x-6">
-        <div className="order-2 grid gap-y-10 lg:max-2xl:grid-cols-2 2xl:order-1 2xl:col-span-8">
+        <div className="order-2 grid gap-y-10 lg:max-xl:grid-cols-2 2xl:order-1 2xl:col-span-8">
           {playlists.map((list) => (
             <Playlist
               {...list}
@@ -165,7 +165,7 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
             />
           ))}
         </div>
-        <div className="order-1 flex flex-col gap-y-4 2xl:order-2 2xl:col-span-4">
+        <div className="order-1 flex flex-col gap-y-4 xl:max-w-[52.5rem] 2xl:order-2 2xl:col-span-4">
           <details
             onClick={handleDetailsClick}
             ref={detailsRef}
@@ -179,7 +179,7 @@ export default function MediaPlayer({ playlists }: IMediaPlayerProps) {
                 <CaretIcon />
               </div>
             </summary>
-            <div className="prose prose-sm prose-gray prose-invert relative mt-10 max-w-none before:absolute before:-top-6 before:left-0 before:h-px before:w-full before:bg-gray-400 after:rounded-full lg:grid lg:grid-cols-2 lg:gap-x-4">
+            <div className="prose prose-sm prose-gray prose-invert relative mt-10 max-w-none before:absolute before:-top-6 before:left-0 before:h-px before:w-full before:bg-gray-400 after:rounded-full lg:grid lg:max-2xl:grid-cols-2 lg:gap-x-4">
               <div className="">
                 <h4 className="mt-0">
                   {currentTrack.composer}: {currentTrack.title}
@@ -226,25 +226,22 @@ export function Playlist(props: IPlaylistProps) {
           <li className="py-2 xl:py-1" key={item.list + index}>
             <a
               href={item.url}
-              className="items-start lg:flex lg:flex-col 2xl:flex-row 2xl:gap-x-4"
+              className="items-start lg:flex lg:flex-col xl:flex-row xl:gap-x-4"
               onClick={createClickHandler(item)}
             >
               <span
                 data-composer
-                className="font-semibold lg:inline-block 2xl:w-[--composer-width]"
+                className="font-semibold lg:inline-block xl:w-[--composer-width]"
               >
                 {currentTrack == item && <NowPlayingIcon />}
                 {item.composer}:{" "}
               </span>
-              <span
-                data-title
-                className="lg:inline-block 2xl:w-[--title-width]"
-              >
+              <span data-title className="lg:inline-block xl:w-[--title-width]">
                 {item.title}{" "}
               </span>
               <span
                 data-tags
-                className="font-alternate font-extralight italic lg:inline-block 2xl:w-[--tags-width]"
+                className="font-alternate font-extralight italic lg:inline-block xl:w-[--tags-width]"
               >
                 ({item.tags.join(", ")})
               </span>
@@ -257,7 +254,7 @@ export function Playlist(props: IPlaylistProps) {
 }
 
 const NowPlayingIcon = () => (
-  <span className="relative mr-2 inline-block 2xl:mr-0">
+  <span className="relative mr-2 inline-block xl:mr-0">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"

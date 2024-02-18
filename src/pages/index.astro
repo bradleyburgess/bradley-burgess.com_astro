@@ -196,12 +196,12 @@ const audioList = await Promise.all(
             What my students are saying
           </h3>
           <ul
-            class="mt-10 flex list-none flex-col items-start gap-10 p-0 lg:flex-row xl:flex-col 2xl:flex-row"
+            class="mt-10 flex list-none flex-col items-start gap-10 md:max-lg:gap-y-14 p-0 md:flex-col xl:flex-col 2xl:flex-row"
           >
             {
               testimonialsList.map((item) => (
-                <li class="grid flex-1 gap-y-4">
-                  <div class="flex items-center gap-6">
+                <li class="grid flex-1 gap-y-4 md:gap-x-10 md:max-lg:grid-cols-12">
+                  <div class="flex items-center gap-6 md:max-lg:gap-y-2 md:max-lg:col-span-3 md:max-lg:flex-col md:max-lg:text-center">
                     <Image
                       src={item.data.image}
                       alt=""
@@ -218,7 +218,9 @@ const audioList = await Promise.all(
                       </span>
                     </p>
                   </div>
-                  <p class="text-sm italic text-gray-300">{item.data.body}</p>
+                  <p class="prose-invert-prose-gray prose text-sm italic text-gray-300 md:max-lg:col-span-9">
+                    {item.data.body}
+                  </p>
                 </li>
               ))
             }
