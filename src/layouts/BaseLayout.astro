@@ -120,11 +120,30 @@ let pageOgImage;
           }
         },
       );
+
+      // Fix some weird scrolling issues when scrolling to anchors
+      // 1. Scrolling to anchor from another page
       if (window.location.hash) {
         setTimeout(() => {
           document.querySelector(window.location.hash)?.scrollIntoView();
-        }, 200);
+        }, 750);
       }
+      // 2. Clicking header nav links that have a hash and scroll on the same page
+      document.querySelector("header")?.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        if (target.tagName === "A") {
+          const { href } = e.target as HTMLAnchorElement;
+          const url = new URL(href);
+          if (url.hash && url.pathname === window.location.pathname) {
+            const node = document.querySelector(url.hash);
+            e.preventDefault();
+            node?.scrollIntoView();
+            setTimeout(() => {
+              node?.scrollIntoView();
+            }, 750);
+          }
+        }
+      });
     </script>
   </body>
 </html>
