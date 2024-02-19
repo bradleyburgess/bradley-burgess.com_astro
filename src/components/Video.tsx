@@ -3,9 +3,11 @@ import { useRef } from "preact/hooks";
 interface Props {
   src: string;
   subtitlesSrc: string;
+  height: number;
+  width: number;
 }
 
-export default function Video({ src, subtitlesSrc }: Props) {
+export default function Video({ src, subtitlesSrc, height, width }: Props) {
   const ref = useRef(null);
   function handleClick(e: Event) {
     const target = e.target as HTMLVideoElement;
@@ -21,6 +23,8 @@ export default function Video({ src, subtitlesSrc }: Props) {
       onClick={handleClick}
       ref={ref}
       loop
+      width={width}
+      height={height}
     >
       <source src={src} />
       <track

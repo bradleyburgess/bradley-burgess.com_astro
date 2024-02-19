@@ -1,4 +1,5 @@
 import type { Ref } from "preact";
+import LoadingSpinner from "react-spinners/ScaleLoader";
 import { forwardRef, type ChangeEvent, type ReactNode } from "preact/compat";
 import { useRef, useState } from "preact/hooks";
 import { useEffect } from "react";
@@ -21,6 +22,7 @@ const ContactForm = () => {
   const [hasJavascript, setHasJavascript] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<boolean | null>();
+  const [waiting, setWaiting] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const questionRef = useRef<HTMLInputElement>(null);
 
@@ -33,12 +35,33 @@ const ContactForm = () => {
     setFormState((state) => ({ ...state, [name]: value }));
   }
 
-  function handleFormSubmit(e: SubmitEvent) {
+  async function handleFormSubmit(e: SubmitEvent) {
     e.preventDefault();
-    console.log(formState);
-    setTimeout(() => {
-      setError(true);
+    setSubmitted(true);
+    setWaiting(true);
+    const honeypot = questionRef.current?.value;
+    const result = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...formState, honeypot }),
+    });
+    const data = await result.json();
+    console.log(data);
+    const success = data.success;
+    if (success) {
+      setError(false);
       setSubmitted(true);
+      setTimeout(() => {
+        setWaiting(false);
+      }, 1000);
+      return;
+    }
+    setSubmitted(true);
+    setError(true);
+    setTimeout(() => {
+      setWaiting(false);
     }, 1000);
   }
 
@@ -84,7 +107,15 @@ const ContactForm = () => {
     }
   }, []);
 
-  return submitted && !error ? (
+  return submitted && waiting ? (
+    <div className="mt-10 flex justify-center">
+      <div className="flex flex-col items-center gap-4 rounded-3xl bg-gray-800 px-10 py-8">
+        {/* @ts-ignore-next-line */}
+        <LoadingSpinner size={20} loading={true} color="#d1d5db" />
+        <p>Submitting request …</p>
+      </div>
+    </div>
+  ) : submitted && !error ? (
     <ContactSuccess buttonClickHandler={successButtonClickHander} />
   ) : submitted && error ? (
     <ContactError buttonClickHandler={errorButtonClickHandler} />
@@ -244,8 +275,8 @@ const ContactSuccess = ({ buttonClickHandler }: IContactSuccessProps) => {
   return (
     <div className="prose prose-gray prose-invert">
       <p>
-        <span className="font-semibold text-gray-50">Success!</span> Your email
-        was sent. I'll be in touch soon.
+        <span className="font-semibold text-green-600">Success!</span> Your
+        email was sent. I'll be in touch soon.
       </p>
       <button
         className="w-full rounded-2xl bg-gray-900 p-2 px-10 transition-colors duration-100 hover:bg-gray-800"
@@ -253,7 +284,12 @@ const ContactSuccess = ({ buttonClickHandler }: IContactSuccessProps) => {
       >
         Send another message.
       </button>
-      <Video src="/video/thank-you.mp4" subtitlesSrc="/video/thank-you.vtt" />
+      <Video
+        src="/video/thank-you2.mp4"
+        subtitlesSrc="/video/thank-you2.vtt"
+        height={640}
+        width={640}
+      />
     </div>
   );
 };
@@ -271,7 +307,12 @@ const ContactError = ({ buttonClickHandler }: IContactSuccessProps) => {
       >
         Try sending again.
       </button>
-      <Video src="/video/david.mp4" subtitlesSrc="/video/david.vtt" />
+      <Video
+        src="/video/david.mp4"
+        subtitlesSrc="/video/david.vtt"
+        height={632}
+        width={640}
+      />
     </div>
   );
 };

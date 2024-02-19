@@ -23,7 +23,7 @@ export default defineConfig({
       compat: true,
     }),
   ],
-  output: "server",
+  output: "hybrid",
   adapter: netlify(),
   redirects: {
     "/about": "/#section-bio",
