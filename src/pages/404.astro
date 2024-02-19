@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/BaseLayout.astro";
+import Video from "../components/Video";
+
+import { Content, frontmatter } from "../content/page-partials/404.md";
+const title = frontmatter.title ?? "Not found";
+---
+
+---
+<Layout title={title}>
+  <div class="grid gap-32 lg:gap-48 xl:gap-56">
+    <div class="container grid gap-10 lg:grid-cols-2" id="section-bio">
+      <div>
+        <div
+          class="prose prose-gray prose-invert pl-0 prose-h1:font-alternate prose-h1:text-4xl prose-h1:font-medium lg:p-10 lg:pl-0 [&_blockquote_p]:before:content-none [&_cite]:pl-6"
+        >
+          <Content />
+        </div>
+      </div>
+      <div class="full-bleed">
+        <Video
+          src="/video/david.mp4"
+          subtitlesSrc="/video/thank-you.mp4"
+          client:load
+        />
+      </div>
+    </div>
+  </div>
+</Layout>

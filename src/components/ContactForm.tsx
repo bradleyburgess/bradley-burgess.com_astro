@@ -2,6 +2,7 @@ import type { Ref } from "preact";
 import { forwardRef, type ChangeEvent, type ReactNode } from "preact/compat";
 import { useRef, useState } from "preact/hooks";
 import { useEffect } from "react";
+import Video from "./Video";
 
 interface IFormState {
   name: string;
@@ -240,14 +241,6 @@ interface IContactSuccessProps {
   buttonClickHandler?: (e: MouseEvent) => void;
 }
 const ContactSuccess = ({ buttonClickHandler }: IContactSuccessProps) => {
-  const ref = useRef<HTMLVideoElement>(null);
-
-  function handleClick(e: Event) {
-    const target = e.target as HTMLVideoElement;
-    if (target.paused) return target.play();
-    return target.pause();
-  }
-
   return (
     <div className="prose prose-gray prose-invert">
       <p>
@@ -260,40 +253,17 @@ const ContactSuccess = ({ buttonClickHandler }: IContactSuccessProps) => {
       >
         Send another message.
       </button>
-      <video
-        disableRemotePlayback
-        autoplay
-        onClick={handleClick}
-        ref={ref}
-        loop
-      >
-        <source src="/video/thank-you.mp4" />
-        <track
-          label="English"
-          kind="subtitles"
-          srclang="en"
-          default
-          src="/video/thank-you.vtt"
-        />
-      </video>
+      <Video src="/video/thank-you.mp4" subtitlesSrc="/video/thank-you.vtt" />
     </div>
   );
 };
 
 const ContactError = ({ buttonClickHandler }: IContactSuccessProps) => {
-  const ref = useRef<HTMLVideoElement>(null);
-
-  function handleClick(e: Event) {
-    const target = e.target as HTMLVideoElement;
-    if (target.paused) return target.play();
-    return target.pause();
-  }
-
   return (
     <div className="prose prose-gray prose-invert">
       <p class="text-red-500">
-        <span className="font-bold text-red-500">Yikes!</span> It seems
-        there was an error.
+        <span className="font-bold text-red-500">Yikes!</span> It seems there
+        was an error.
       </p>
       <button
         className="w-full rounded-2xl bg-gray-900 p-2 px-10 transition-colors duration-100 hover:bg-gray-800"
@@ -301,22 +271,7 @@ const ContactError = ({ buttonClickHandler }: IContactSuccessProps) => {
       >
         Try sending again.
       </button>
-      <video
-        disableRemotePlayback
-        autoplay
-        onClick={handleClick}
-        ref={ref}
-        loop
-      >
-        <source src="/video/david.mp4" />
-        <track
-          label="English"
-          kind="subtitles"
-          srclang="en"
-          default
-          src="/video/david.vtt"
-        />
-      </video>
+      <Video src="/video/david.mp4" subtitlesSrc="/video/david.vtt" />
     </div>
   );
 };

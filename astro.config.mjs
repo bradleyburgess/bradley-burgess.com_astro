@@ -3,13 +3,12 @@ import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import preact from "@astrojs/preact";
 import { loadEnv } from "vite";
-
+import netlify from "@astrojs/netlify";
 const { PUBLIC_CONTACT_FORM_KEY } = loadEnv(
   process.env.NODE_ENV,
   process.cwd(),
   "",
 );
-
 if (!PUBLIC_CONTACT_FORM_KEY)
   throw new Error("Contact Form Key (`PUBLIC_CONTACT_FORM_KEY`) not set!");
 
@@ -20,6 +19,19 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     mdx(),
-    preact({ compat: true }),
+    preact({
+      compat: true,
+    }),
   ],
+  output: "server",
+  adapter: netlify(),
+  redirects: {
+    "/about": "/#section-bio",
+    "/music": "/",
+    "/services/teaching-organ": "/#section-teaching",
+    "/services/teaching-piano": "/#section-teaching",
+    "/services/teaching-": "/#section-teaching",
+    "/teaching-music-theory-and-musicianship": "/#section-teaching",
+    "/contact": "/#section-contact",
+  },
 });

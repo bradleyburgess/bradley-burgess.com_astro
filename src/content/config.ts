@@ -48,6 +48,7 @@ const pagePartialCollection = defineCollection({
           alt: z.string(),
         })
         .optional(),
+      title: z.string().optional(),
     }),
 });
 
