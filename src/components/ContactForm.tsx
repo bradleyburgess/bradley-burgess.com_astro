@@ -119,6 +119,7 @@ const ContactForm = () => {
 
     setSubmitted(true);
     setWaiting(true);
+    document.querySelector("#section-contact")?.scrollIntoView();
     const honeypot = questionRef.current?.value;
     const result = await fetch("/api/contact", {
       method: "POST",
@@ -210,7 +211,6 @@ const ContactForm = () => {
           name="name"
           onChange={handleFormChange}
           value={formState.name}
-          required
           ref={nameRef}
         />
       </Label>
@@ -220,7 +220,6 @@ const ContactForm = () => {
           name="email"
           onChange={handleFormChange}
           value={formState.email}
-          required
         />
       </Label>
       <Label htmlFor="subject" error={formErrors.subject}>
@@ -229,7 +228,6 @@ const ContactForm = () => {
           name="subject"
           onChange={handleFormChange}
           value={formState.subject}
-          required
         />
       </Label>
       <Label htmlFor="message" stack={true} error={formErrors.message}>
@@ -237,7 +235,6 @@ const ContactForm = () => {
           name="message"
           onChange={handleFormChange}
           value={formState.message}
-          required
         ></Textarea>
       </Label>
       <label htmlFor="question" className="sr-only">
@@ -294,7 +291,7 @@ interface IErrorMsgProps {
   msg?: string;
 }
 const ErrorMsg = ({ msg }: IErrorMsgProps) => (
-  <span className="inline-block w-full font-semibold text-red-500 md:text-right">
+  <span className="inline-block w-full font-semibold text-red-500 text-right">
     {msg ?? ""}
   </span>
 );
@@ -354,7 +351,7 @@ const Submit = ({ value, disabled }: ISubmitProps) => (
   <input
     type="submit"
     value={value}
-    className="cursor-pointer rounded-2xl bg-gray-800 py-2 transition-colors duration-100 hover:bg-gray-700 disabled:cursor-not-allowed disabled:hover:bg-gray-800 disabled:text-gray-500"
+    className="cursor-pointer rounded-2xl bg-gray-800 py-2 transition-colors duration-100 hover:bg-gray-700 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:bg-gray-800"
     disabled={disabled}
   />
 );
@@ -381,7 +378,7 @@ const ContactSuccess = ({ buttonClickHandler }: IContactSuccessProps) => {
     <div className="prose prose-gray prose-invert">
       <p>
         <span className="font-semibold text-green-600">Success!</span> Your
-        email was sent. I'll be in touch soon.
+        message was sent. I'll be in touch soon.
       </p>
       <button
         className="w-full rounded-2xl bg-gray-900 p-2 px-10 transition-colors duration-100 hover:bg-gray-800"
