@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 
 export const prerender = false;
 
-const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } = import.meta.env;
+const { NODE_ENV, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } = import.meta.env;
 
 interface ITelegramMessageProps {
   formName: string;
@@ -61,29 +61,33 @@ const log = ({ formEmail, formName, formSubject }: ILogProps) =>
   );
 
 export const POST: APIRoute = async ({ request, params }) => {
-  const honeypotKey = import.meta.env.PUBLIC_CONTACT_FORM_KEY;
   const data = await request.json();
   const formName = data.name;
   const formEmail = data.email;
   const formSubject = data.subject;
   const formMessage = data.message;
   const formHoneypot = data.honeypot;
-
-  if (formHoneypot != honeypotKey) {
-    return new Response(
-      JSON.stringify({ success: false, message: "Honeypot Key changed!" }),
-    );
-  }
-
   log({ formEmail, formSubject, formName });
-  const result = await sendTelegramMessage({
-    formName,
-    formEmail,
-    formSubject,
-    formMessage,
-  });
-  if (result.status === 200) {
+  if (NODE_ENV === "production") {
+    const honeypotKey = import.meta.env.PUBLIC_CONTACT_FORM_KEY;
+
+    if (formHoneypot != honeypotKey) {
+      return new Response(
+        JSON.stringify({ success: false, message: "Honeypot Key changed!" }),
+      );
+    }
+
+    const result = await sendTelegramMessage({
+      formName,
+      formEmail,
+      formSubject,
+      formMessage,
+    });
+    if (result.status === 200) {
+      return new Response(JSON.stringify({ success: true }));
+    }
+    return new Response(JSON.stringify({ success: false }));
+  } else {
     return new Response(JSON.stringify({ success: true }));
   }
-  return new Response(JSON.stringify({ success: false }));
 };
