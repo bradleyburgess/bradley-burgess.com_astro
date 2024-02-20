@@ -188,7 +188,7 @@ const audioList = await Promise.all(
       </div>
       <div class="order-1 lg:order-2 lg:p-10">
         <div
-          class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
+          class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:mt-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
         >
           <div>
             <TeachingContent />
@@ -238,7 +238,7 @@ const audioList = await Promise.all(
     <section class="container grid gap-10 lg:grid-cols-2" id="section-contact">
       <div>
         <div
-          class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium lg:p-10 lg:pl-0"
+          class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:mt-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium lg:p-10 lg:pl-0"
         >
           <div>
             <ContactContent />
@@ -262,7 +262,7 @@ const audioList = await Promise.all(
           <ContactForm client:load client:only="preact" />
         </div>
       </div>
-      <div class="full-bleed grid place-items-center">
+      <div class="full-bleed">
         <Image
           src={ImageBradleyOutside}
           widths={[300, 600, 800, 1000, 1200, 1600]}

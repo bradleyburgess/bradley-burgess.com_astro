@@ -5,6 +5,56 @@ import { useRef, useState } from "preact/hooks";
 import { useEffect } from "react";
 import Video from "./Video";
 
+const isNotEmpty = (input: string) => input.length > 0;
+const isLessThan = (length: number) => (input: string) => input.length < length;
+const isValidEmail = (input: string) =>
+  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input);
+
+interface IValidators {
+  name: {
+    test: (input: string) => boolean;
+    errorMsg: string;
+  }[];
+  email: {
+    test: (input: string) => boolean;
+    errorMsg: string;
+  }[];
+  subject: {
+    test: (input: string) => boolean;
+    errorMsg: string;
+  }[];
+  message: {
+    test: (input: string) => boolean;
+    errorMsg: string;
+  }[];
+}
+
+type TFormField = "name" | "email" | "subject" | "message";
+
+const validators: IValidators = {
+  name: [
+    { test: isNotEmpty, errorMsg: "Name can't be empty" },
+    { test: isLessThan(50), errorMsg: "Name must be less than 50 characters" },
+  ],
+  email: [{ test: isValidEmail, errorMsg: "Must be a valid email address" }],
+  subject: [
+    { test: isNotEmpty, errorMsg: "Subject can't be empty" },
+    {
+      test: isLessThan(50),
+      errorMsg: "Subject must be less than 50 characters",
+    },
+  ],
+  message: [
+    { test: isNotEmpty, errorMsg: "Message can't be empty" },
+    {
+      test: isLessThan(300),
+      errorMsg: "Please enter a message less than 300 characters",
+    },
+  ],
+};
+
+const blankFormErrors = { name: "", email: "", subject: "", message: "" };
+
 interface IFormState {
   name: string;
   email: string;
@@ -22,6 +72,12 @@ const ContactForm = () => {
   const [hasJavascript, setHasJavascript] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<boolean | null>();
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    subject: "",
+    email: "",
+    message: "",
+  });
   const [waiting, setWaiting] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const questionRef = useRef<HTMLInputElement>(null);
@@ -32,11 +88,35 @@ const ContactForm = () => {
 
   function handleFormChange(e: ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
+    let error = false;
+    for (let item of validators[name as TFormField]) {
+      if (!item.test(value)) {
+        setFormErrors((state) => ({ ...state, [name]: item.errorMsg }));
+        error = true;
+        break;
+      }
+    }
+    if (!error) setFormErrors((state) => ({ ...state, [name]: "" }));
     setFormState((state) => ({ ...state, [name]: value }));
   }
 
   async function handleFormSubmit(e: SubmitEvent) {
     e.preventDefault();
+    let errors = false;
+    for (let key in validators) {
+      for (let item of validators[key as TFormField]) {
+        const result = item.test(formState[key as TFormField]);
+        if (!result) {
+          setFormErrors((state) => ({ ...state, [key]: item.errorMsg }));
+          errors = true;
+          break;
+        }
+      }
+    }
+
+    if (errors) return;
+    setFormErrors({ ...blankFormErrors });
+
     setSubmitted(true);
     setWaiting(true);
     const honeypot = questionRef.current?.value;
@@ -48,17 +128,14 @@ const ContactForm = () => {
       body: JSON.stringify({ ...formState, honeypot }),
     });
     const data = await result.json();
-    console.log(data);
     const success = data.success;
     if (success) {
       setError(false);
-      setSubmitted(true);
       setTimeout(() => {
         setWaiting(false);
       }, 1000);
       return;
     }
-    setSubmitted(true);
     setError(true);
     setTimeout(() => {
       setWaiting(false);
@@ -69,6 +146,7 @@ const ContactForm = () => {
     setSubmitted(false);
     setFormState((state) => ({ ...state, message: "", subject: "" }));
     setError(null);
+    setFormErrors({ ...blankFormErrors });
   }
 
   function errorButtonClickHandler() {
@@ -126,7 +204,7 @@ const ContactForm = () => {
       className="flex flex-col gap-5"
       style={{ "--labelLength": "5rem" }}
     >
-      <Label htmlFor="name">
+      <Label htmlFor="name" error={formErrors.name}>
         <Input
           type="text"
           name="name"
@@ -136,7 +214,7 @@ const ContactForm = () => {
           ref={nameRef}
         />
       </Label>
-      <Label htmlFor="email">
+      <Label htmlFor="email" error={formErrors.email}>
         <Input
           type="email"
           name="email"
@@ -145,7 +223,7 @@ const ContactForm = () => {
           required
         />
       </Label>
-      <Label htmlFor="subject">
+      <Label htmlFor="subject" error={formErrors.subject}>
         <Input
           type="text"
           name="subject"
@@ -154,7 +232,7 @@ const ContactForm = () => {
           required
         />
       </Label>
-      <Label htmlFor="message" stack={true}>
+      <Label htmlFor="message" stack={true} error={formErrors.message}>
         <Textarea
           name="message"
           onChange={handleFormChange}
@@ -173,7 +251,15 @@ const ContactForm = () => {
           ref={questionRef}
         />
       </label>
-      <Submit value="Submit" />
+      <Submit
+        value="Submit"
+        disabled={
+          !!formErrors.name ||
+          !!formErrors.email ||
+          !!formErrors.subject ||
+          !!formErrors.message
+        }
+      />
     </form>
   );
 };
@@ -184,16 +270,33 @@ interface ILabelProps {
   children: ReactChildren;
   htmlFor: string;
   stack?: boolean;
+  error?: string;
 }
 
-const Label = ({ children, htmlFor, stack }: ILabelProps) => (
-  <label
-    htmlFor={htmlFor}
-    className={`flex gap-x-4 gap-y-2 ${stack ? "flex-col justify-center" : "items-center"}`}
-  >
-    <span className="inline-block w-[--labelLength]">{labelize(htmlFor)}</span>
-    {children}
-  </label>
+const Label = ({ error, children, htmlFor, stack }: ILabelProps) => (
+  <div>
+    <label
+      htmlFor={htmlFor}
+      className={`flex gap-x-4 gap-y-2 ${stack ? "flex-col justify-center" : "items-center"} ${error ? "[&_input]:border-red-500 [&_input]:bg-red-950 [&_input]:text-red-100 [&_textarea]:border-red-500 [&_textarea]:bg-red-950 [&_textarea]:text-red-100" : ""}`}
+    >
+      <span
+        className={`inline-block w-[--labelLength] font-alternate ${error ? "text-red-400" : ""}`}
+      >
+        {labelize(htmlFor)}
+      </span>
+      {children}
+    </label>
+    {error && <ErrorMsg msg={error} />}
+  </div>
+);
+
+interface IErrorMsgProps {
+  msg?: string;
+}
+const ErrorMsg = ({ msg }: IErrorMsgProps) => (
+  <span className="inline-block w-full font-semibold text-red-500 md:text-right">
+    {msg ?? ""}
+  </span>
 );
 
 interface IInputProps {
@@ -244,13 +347,15 @@ const Textarea = ({ required, name, onChange, value }: ITextareaProps) => (
 
 interface ISubmitProps {
   value: string;
+  disabled: boolean;
 }
 
-const Submit = ({ value }: ISubmitProps) => (
+const Submit = ({ value, disabled }: ISubmitProps) => (
   <input
     type="submit"
     value={value}
-    className="cursor-pointer rounded-2xl bg-gray-800 py-2 transition-colors duration-100 hover:bg-gray-700"
+    className="cursor-pointer rounded-2xl bg-gray-800 py-2 transition-colors duration-100 hover:bg-gray-700 disabled:cursor-not-allowed disabled:hover:bg-gray-800 disabled:text-gray-500"
+    disabled={disabled}
   />
 );
 
