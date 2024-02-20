@@ -47,8 +47,8 @@ const validators: IValidators = {
   message: [
     { test: isNotEmpty, errorMsg: "Message can't be empty" },
     {
-      test: isLessThan(300),
-      errorMsg: "Please enter a message less than 300 characters",
+      test: isLessThan(1000),
+      errorMsg: "Please enter a message less than 1000 characters",
     },
   ],
 };
@@ -212,6 +212,7 @@ const ContactForm = () => {
           onChange={handleFormChange}
           value={formState.name}
           ref={nameRef}
+          placeholder="Johann Sebastian Bach"
         />
       </Label>
       <Label htmlFor="email" error={formErrors.email}>
@@ -220,6 +221,7 @@ const ContactForm = () => {
           name="email"
           onChange={handleFormChange}
           value={formState.email}
+          placeholder="jsbach@stthomasleipzig.org"
         />
       </Label>
       <Label htmlFor="subject" error={formErrors.subject}>
@@ -228,13 +230,21 @@ const ContactForm = () => {
           name="subject"
           onChange={handleFormChange}
           value={formState.subject}
+          placeholder="How can I help you?"
         />
       </Label>
-      <Label htmlFor="message" stack={true} error={formErrors.message}>
+      <Label
+        htmlFor="message"
+        stack={true}
+        error={formErrors.message}
+        charCount={formState.message.length}
+        maxCharCount={1000}
+      >
         <Textarea
           name="message"
           onChange={handleFormChange}
           value={formState.message}
+          placeholder="Enter your message, max 1000 characters"
         ></Textarea>
       </Label>
       <label htmlFor="question" className="sr-only">
@@ -246,6 +256,7 @@ const ContactForm = () => {
           className="sr-only"
           value={import.meta.env.PUBLIC_CONTACT_FORM_KEY ?? ""}
           ref={questionRef}
+          placeholder="Enter your message, max 1000 characters"
         />
       </label>
       <Submit
@@ -268,18 +279,36 @@ interface ILabelProps {
   htmlFor: string;
   stack?: boolean;
   error?: string;
+  charCount?: number;
+  maxCharCount?: number;
 }
 
-const Label = ({ error, children, htmlFor, stack }: ILabelProps) => (
+const Label = ({
+  error,
+  charCount,
+  maxCharCount,
+  children,
+  htmlFor,
+  stack,
+}: ILabelProps) => (
   <div>
     <label
       htmlFor={htmlFor}
       className={`flex gap-x-4 gap-y-2 ${stack ? "flex-col justify-center" : "items-center"} ${error ? "[&_input]:border-red-500 [&_input]:bg-red-950 [&_input]:text-red-100 [&_textarea]:border-red-500 [&_textarea]:bg-red-950 [&_textarea]:text-red-100" : ""}`}
     >
       <span
-        className={`inline-block w-[--labelLength] font-alternate ${error ? "text-red-400" : ""}`}
+        className={`${stack ? "flex w-full items-end justify-between" : "inline-block w-[--labelLength]"} font-alternate ${error ? "text-red-400" : ""}`}
       >
-        {labelize(htmlFor)}
+        {charCount === undefined ? (
+          <span>{labelize(htmlFor)}</span>
+        ) : (
+          <>
+            <span>{labelize(htmlFor)}</span>
+            <span className="pr-1 text-xs font-extralight">
+              ({charCount}/{maxCharCount})
+            </span>
+          </>
+        )}
       </span>
       {children}
     </label>
@@ -291,7 +320,7 @@ interface IErrorMsgProps {
   msg?: string;
 }
 const ErrorMsg = ({ msg }: IErrorMsgProps) => (
-  <span className="inline-block w-full font-semibold text-red-500 text-right">
+  <span className="inline-block w-full text-right font-semibold text-red-500">
     {msg ?? ""}
   </span>
 );
@@ -301,12 +330,12 @@ interface IInputProps {
   name: string;
   onChange: (e: ChangeEvent) => void;
   value: string;
-  required?: boolean;
+  placeholder?: string;
 }
 
 const Input = forwardRef(
   (
-    { required, type, name, onChange, value }: IInputProps,
+    { type, name, onChange, value, placeholder }: IInputProps,
     ref: Ref<HTMLInputElement>,
   ) => (
     <input
@@ -316,8 +345,8 @@ const Input = forwardRef(
       onChange={onChange}
       value={value}
       className="flex-1 rounded-2xl bg-gray-900 transition-colors duration-100 focus-within:border-gray-300 focus-within:bg-gray-800 focus-within:shadow-gray-300 focus-within:outline-0 hover:bg-gray-800 focus:border-gray-300 focus:bg-gray-800 focus:shadow-gray-300 focus:outline-0"
-      required={required}
       ref={ref}
+      placeholder={placeholder}
     />
   ),
 );
@@ -326,10 +355,10 @@ interface ITextareaProps {
   name: string;
   onChange: (e: ChangeEvent) => void;
   value: string;
-  required?: boolean;
+  placeholder?: string;
 }
 
-const Textarea = ({ required, name, onChange, value }: ITextareaProps) => (
+const Textarea = ({ placeholder, name, onChange, value }: ITextareaProps) => (
   <textarea
     name={name}
     id={name}
@@ -338,7 +367,7 @@ const Textarea = ({ required, name, onChange, value }: ITextareaProps) => (
     cols={30}
     rows={10}
     className="resize-none rounded-2xl bg-gray-900 transition-colors duration-100 focus-within:border-gray-300 focus-within:bg-gray-800 focus-within:shadow-gray-300 focus-within:outline-0 hover:bg-gray-800 focus:border-gray-300 focus:bg-gray-800 focus:shadow-gray-300 focus:outline-0"
-    required={required}
+    placeholder={placeholder}
   ></textarea>
 );
 
