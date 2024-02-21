@@ -3,7 +3,7 @@ import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import preact from "@astrojs/preact";
 import { loadEnv } from "vite";
-import netlify from "@astrojs/netlify/functions";
+import netlify from "@astrojs/netlify";
 const { PUBLIC_CONTACT_FORM_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } =
   loadEnv(process.env.NODE_ENV, process.cwd(), "");
 [PUBLIC_CONTACT_FORM_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID].forEach(
@@ -24,7 +24,9 @@ export default defineConfig({
     }),
   ],
   output: "hybrid",
-  adapter: netlify(),
+  adapter: netlify({
+    edgeMiddleware: true
+  }),
   redirects: {
     "/about": "/#section-bio",
     "/music": "/",
