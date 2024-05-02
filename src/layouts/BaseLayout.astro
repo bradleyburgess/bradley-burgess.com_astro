@@ -25,7 +25,7 @@ let pageOgImage;
 <!doctype html>
 <html
   lang="en"
-  class="h-full min-h-full scroll-pt-20 scroll-smooth bg-gray-950 text-gray-50"
+  class="h-full min-h-full scroll-pt-20 overflow-x-clip scroll-smooth bg-gray-950 text-gray-50"
   data-js="false"
 >
   <head>
@@ -58,7 +58,7 @@ let pageOgImage;
       }
     </style>
   </head>
-  <body class="flex min-h-full flex-col">
+  <body class="overflow-x-clip flex min-h-full flex-col">
     <header class="sticky top-0 z-10 pb-10">
       <div
         class="container flex flex-col items-center bg-gray-950 py-2 lg:flex-row lg:justify-between"
@@ -102,12 +102,12 @@ let pageOgImage;
                 window.dispatchEvent(
                   new CustomEvent("contactsubject", {
                     detail: this.getAttribute("subject"),
-                  }),
+                  })
                 );
               }
             });
           }
-        },
+        }
       );
 
       window.customElements.define(
@@ -118,7 +118,7 @@ let pageOgImage;
             this.innerHTML = "";
             this.remove();
           }
-        },
+        }
       );
 
       // Fix some weird scrolling issues when scrolling to anchors
