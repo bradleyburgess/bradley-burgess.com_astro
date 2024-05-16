@@ -27,6 +27,7 @@ let pageOgImage;
   lang="en"
   class="h-full min-h-full scroll-pt-20 overflow-x-clip scroll-smooth bg-gray-950 text-gray-50"
   data-js="false"
+  data-seen-announcement="false"
 >
   <head>
     <meta charset="UTF-8" />
@@ -58,7 +59,34 @@ let pageOgImage;
       }
     </style>
   </head>
-  <body class="overflow-x-clip flex min-h-full flex-col">
+  <body class="flex min-h-full flex-col overflow-x-clip">
+    <div class="full-bleed container relative" id="announcement">
+      <div class="prose relative w-full max-w-full text-black">
+        <p class="bg-yellow-400 p-4 font-bold text-black">
+          📢 News flash! Bradley is currently fundraising towards his first
+          album: The complete Orgelbüchlein of J. S. Bach. Check out the
+          <a
+            href="https://www.indiegogo.com/projects/bradley-burgess-the-orgelbuchlein"
+            class="font-bold">Indiegogo campaign</a
+          > for more information and to make a contribution. Thanks for supporting!
+        </p>
+        <button aria-label="Close announcement" class="absolute right-0 top-0"
+          ><svg
+            aria-label=""
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path fill="none" d="M0 0h24v24H0V0z"></path>
+            <path
+              d="M18 6L6 18M6 6l12 12"
+              stroke="currentColor"
+              stroke-width="2"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
     <header class="sticky top-0 z-10 pb-10">
       <div
         class="container flex flex-col items-center bg-gray-950 py-2 lg:flex-row lg:justify-between"
@@ -144,6 +172,14 @@ let pageOgImage;
           }
         }
       });
+
+      (() => {
+        const announcement = document.getElementById("announcement");
+        announcement?.querySelector("button")?.addEventListener("click", () => {
+          window.localStorage.setItem("hasSeenIndiegogo2024", "true");
+          announcement.remove();
+        });
+      })();
     </script>
   </body>
 </html>

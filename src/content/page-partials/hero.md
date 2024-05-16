@@ -3,8 +3,8 @@ image:
   src: ../../assets/img/bradley/bradley-brick.jpg
   alt: Bradley, looking at the camera, sitting in front of an open-face red-brick wall
 cta:
-  - text: "Read full bio."
-    href: "#section-bio"
+  - text: "Support the Orgelbüchlein Project."
+    href: "https://www.indiegogo.com/projects/bradley-burgess-the-orgelbuchlein/"
   - text: "Listen to or watch music."
     href: "#section-music"
   - text: "Learn about teaching."
