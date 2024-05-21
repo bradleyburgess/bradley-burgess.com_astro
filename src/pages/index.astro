@@ -17,13 +17,15 @@ import {
   frontmatter as HeroFrontmatter,
   Content as HeroContent,
 } from "../content/page-partials/hero.md";
-import { Content as BioContent } from "../content/page-partials/bio.md";
+import { Content as BioContent } from "../content/page-partials/bio.mdx";
 import { Content as MusicContent } from "../content/page-partials/music.md";
 import { Content as TeachingContent } from "../content/page-partials/teaching.mdx";
 import { Content as ContactContent } from "../content/page-partials/contact.mdx";
 
-import ImageBradleyBrick from "../assets/img/bradley/bradley-brick.jpg";
-import ImageBradleyHeadshot from "../assets/img/bradley/bradley-headshot4.jpg";
+// import ImageBradleyBrick from "../assets/img/bradley/bradley-brick.jpg";
+import ImageBradleyBW from "../assets/img/bradley/bradley-bw.jpg";
+import ImageBradleyNew from "../assets/img/bradley/bradley-new.jpg";
+// import ImageBradleyHeadshot from "../assets/img/bradley/bradley-headshot4.jpg";
 import ImageBradleyHands from "../assets/img/bradley/bradley-manuals.jpg";
 import ImageBradleyOutside from "../assets/img/bradley/bradley-outside.jpg";
 
@@ -35,24 +37,24 @@ type TCta = {
 const testimonialsList = await getCollection("testimonials");
 
 const allVideoTracks = (await getCollection("video-tracks")).filter(
-  (item) => !item.data.exclude,
+  (item) => !item.data.exclude
 );
 const allAudioTracks = (await getCollection("audio-tracks")).filter(
-  (item) => !item.data.exclude,
+  (item) => !item.data.exclude
 );
 const videoList = await Promise.all(
   allVideoTracks.map(async (item) => {
     const { data } = item;
     const content = await marked.parse(item.body);
     return { ...data, list: "video-tracks", notes: content };
-  }),
+  })
 );
 const audioList = await Promise.all(
   allAudioTracks.map(async (item) => {
     const { data } = item;
     const content = await marked.parse(item.body);
     return { ...data, list: "audio-tracks", notes: content };
-  }),
+  })
 );
 ---
 
@@ -62,8 +64,8 @@ const audioList = await Promise.all(
     <section class="container grid gap-10 lg:grid-cols-2">
       <div class="full-bleed">
         <Image
-          src={ImageBradleyBrick}
-          alt="Bradley looking at the camera, sitting in front of an open-face red brick wall"
+          src={ImageBradleyBW}
+          alt="Bradley, seated and smiling, looking at the camera, with his left arm leaning on the piano"
           loading="eager"
           class="sticky top-0"
           widths={[300, 600, 800, 1000, 1200, 1600]}
@@ -132,14 +134,35 @@ const audioList = await Promise.all(
       </div>
       <div class="full-bleed">
         <Image
-          src={ImageBradleyHeadshot}
-          alt="Bradley smiling, sitting in front of a 5-manual organ"
-          class="sticky top-0"
+          src={ImageBradleyNew}
+          alt="Bradey, seated and smiling at the camera."
+          class="sticky top-0 lg:top-20"
           widths={[300, 600, 800, 1000, 1200, 1600]}
           sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 40vw, 1200px"
         />
       </div>
     </section>
+
+    <!-- <section class="lg:cols-2 container grid gap-10">
+      <div class="prose prose-gray prose-invert">
+        <p>
+          Bradley is currently fundraising towards his first studio album: the
+          complete Orgelbüchlein of J. S. Bach.
+        </p>
+      </div>
+      <div class="full-bleed max-w-full">
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/miwISYDcnRk?si=nW8mjLq3GY-gBXPm"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          class="w-full aspect-video"
+          allowfullscreen></iframe>
+      </div>
+    </section> -->
 
     <!-- MUSIC SECTION -------------------------------------------------------------------------------------- -->
     <section class="container grid" id="section-music">
