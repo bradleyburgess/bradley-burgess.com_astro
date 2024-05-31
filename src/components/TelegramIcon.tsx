@@ -1,6 +1,7 @@
 const TelegramIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    aria-label="Telegram"
     viewBox="0 0 496 512"
     class="fill-current"
   >

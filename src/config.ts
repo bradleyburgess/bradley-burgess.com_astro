@@ -1,4 +1,6 @@
-// import TelegramIcon from "./components/TelegramIcon";
+import TelegramIcon from "./components/TelegramIcon";
+import YouTubeIcon from "./components/YouTubeIcon";
+import TikTokIcon from "./components/TikTokIcon";
 
 export const siteTitle = "Bradley Burgess";
 
@@ -18,18 +20,32 @@ export const mainNavList = [
   { name: "contact", href: "/#section-contact" },
 ];
 
-// type TContactLink = {
-//   name: string;
-//   icon: any;
-//   link: string;
-//   handle: string;
-// };
+type TContactLink = {
+  name: TSocialMediaNetwork;
+  link: string;
+  handle: string;
+  color: string;
+};
 
-// export const contactLinks: TContactLink[] = [
-//   {
-//     name: "Telegram",
-//     icon: TelegramIcon,
-//     handle: "@bburgess_keys",
-//     link: "https://t.me/bburgess_keys",
-//   },
-// ];
+type TSocialMediaNetwork = "TikTok" | "Telegram" | "YouTube";
+
+export const contactLinks: TContactLink[] = [
+  {
+    name: "YouTube",
+    handle: "@bburgess_keys",
+    link: "https://www.youtube.com/@bburgess_keys",
+    color: "#FF0000",
+  },
+  {
+    name: "TikTok",
+    handle: "@bburgess_keys",
+    link: "https://www.tiktok.com/@bburgess_keys",
+    color: "#DE8C9D",
+  },
+  {
+    name: "Telegram",
+    handle: "@bburgess_keys",
+    link: "https://t.me/bburgess_keys",
+    color: "#24A1DE",
+  },
+];

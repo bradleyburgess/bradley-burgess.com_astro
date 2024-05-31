@@ -10,6 +10,7 @@ import FancyUnderline from "../components/FancyUnderline.astro";
 import MediaPlayer from "../components/MediaPlayer";
 import ContactForm from "../components/ContactForm";
 import InfoIcon from "../components/InfoIcon.astro";
+import SocialLinks from "../components/SocialLinks";
 
 import getSeparateFirstWord from "../lib/getSeparateFirstWord";
 
@@ -105,6 +106,7 @@ const audioList = await Promise.all(
             ))
           }
         </ul>
+        <SocialLinks />
       </div>
       <div class="sticky bottom-10 mt-20 flex justify-center lg:col-span-2">
         <div
