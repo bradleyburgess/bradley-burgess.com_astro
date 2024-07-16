@@ -1,0 +1,50 @@
+---
+import Layout from "../layouts/BaseLayout.astro";
+import YouTubeEmbed from "../components/YouTubeEmbed";
+import { Image } from "astro:assets";
+
+import { Content } from "../content/page-partials/ob.md";
+import QRCode from "../assets/img/qr-code-venmo.png";
+
+const VENMO_LINK =
+  "https://venmo.com/?txn=pay&audience=private&recipients=bradleyburgess@gmail.com&note=Orgelb%C3%BCchlein%20Fundraiser";
+---
+
+<Layout
+  description="The Orgelbüchlein Recording Project is a culmination of a 2-year long journey exploring this masterwork."
+  title="Orgelbćuhelein Project"
+>
+  <section class="container grid gap-10">
+    <div class="prose prose-xl prose-gray prose-invert mx-auto">
+      <h1
+        class="text-center font-alternate text-3xl font-medium uppercase lg:text-left xl:text-4xl"
+      >
+        The Orgelbüchlein Project
+      </h1>
+    </div>
+    <div class="mx-auto lg:w-[65ch]">
+      <div class="full-bleed w-full">
+        <YouTubeEmbed
+          src="https://www.youtube.com/embed/miwISYDcnRk?si=KHNd25q9kisp9QOH"
+          client:idle
+          client:only="preact"
+        />
+      </div>
+    </div>
+    <div class="prose prose-gray prose-invert mx-auto">
+      <Content />
+    </div>
+    <div class="flex flex-col items-center justify-center gap-10 md:flex-row">
+      <div class="max-w-72">
+        <a href={VENMO_LINK}>
+          <Image src={QRCode} alt="Venmo me" />
+        </a>
+      </div>
+      <a
+        href={VENMO_LINK}
+        class="rounded-full border-2 border-gray-100 bg-gray-100 px-6 py-2 font-bold uppercase text-gray-900 transition-colors duration-150 ease-in-out hover:bg-gray-900 hover:text-gray-100"
+        >Donate via Venmo</a
+      >
+    </div>
+  </section>
+</Layout>

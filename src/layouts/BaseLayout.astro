@@ -60,33 +60,42 @@ let pageOgImage;
     </style>
   </head>
   <body class="flex min-h-full flex-col overflow-x-clip">
-    <div class="full-bleed container relative" id="announcement">
-      <div class="prose relative w-full max-w-full text-black">
-        <p class="bg-yellow-400 p-4 font-bold text-black">
-          📢 News flash! Bradley is currently fundraising towards his first
-          album: The complete Orgelbüchlein of J. S. Bach. Check out the
-          <a
-            href="https://www.indiegogo.com/projects/bradley-burgess-the-orgelbuchlein"
-            class="font-bold">Indiegogo campaign</a
-          > for more information and to make a contribution. Thanks for supporting!
-        </p>
-        <button aria-label="Close announcement" class="absolute right-0 top-0"
-          ><svg
-            aria-label=""
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-          >
-            <path fill="none" d="M0 0h24v24H0V0z"></path>
-            <path
-              d="M18 6L6 18M6 6l12 12"
-              stroke="currentColor"
-              stroke-width="2"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
+    {
+      Astro.url.pathname !== "/ob" && (
+        <div class="full-bleed container relative" id="announcement">
+          <div class="prose relative w-full max-w-full text-black">
+            <p class="bg-yellow-400 p-4 font-bold text-black">
+              📢 News flash! Bradley is currently fundraising towards his first
+              album: The complete Orgelbüchlein of J. S. Bach. See the
+              <!-- prettier-ignore-start -->
+              <a href="/ob" class="font-bold">project page</a>
+              <!-- prettier-ignore-end -->
+              for more information and do make a donation. Thanks for
+              supporting!
+            </p>
+            <button
+              aria-label="Close announcement"
+              class="absolute right-0 top-0"
+            >
+              <svg
+                aria-label=""
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path
+                  d="M18 6L6 18M6 6l12 12"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )
+    }
     <header class="sticky top-0 z-10 pb-10">
       <div
         class="container flex flex-col items-center bg-gray-950 py-2 lg:flex-row lg:justify-between"
@@ -130,12 +139,12 @@ let pageOgImage;
                 window.dispatchEvent(
                   new CustomEvent("contactsubject", {
                     detail: this.getAttribute("subject"),
-                  })
+                  }),
                 );
               }
             });
           }
-        }
+        },
       );
 
       window.customElements.define(
@@ -146,7 +155,7 @@ let pageOgImage;
             this.innerHTML = "";
             this.remove();
           }
-        }
+        },
       );
 
       // Fix some weird scrolling issues when scrolling to anchors
