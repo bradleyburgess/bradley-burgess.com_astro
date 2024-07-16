@@ -20,6 +20,9 @@ const pageTitle = title
   : `${siteTitle} | ${siteTagline}`;
 const pageDescription = description ? description : siteDescription;
 let pageOgImage;
+
+const reStartSlash = new RegExp("^/")
+const reEndSlash = new RegExp("/$")
 ---
 
 <!doctype html>
@@ -61,7 +64,7 @@ let pageOgImage;
   </head>
   <body class="flex min-h-full flex-col overflow-x-clip">
     {
-      Astro.url.pathname !== "/ob" && (
+    Astro.url.pathname.trim().replace(reStartSlash, "").replace(reEndSlash, "") !== "/ob" && (
         <div class="full-bleed container relative" id="announcement">
           <div class="prose relative w-full max-w-full text-black">
             <p class="bg-yellow-400 p-4 font-bold text-black">

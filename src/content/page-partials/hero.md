@@ -4,7 +4,7 @@ image:
   alt: Bradley, looking at the camera, sitting in front of an open-face red-brick wall
 cta:
   - text: "Support the Orgelbüchlein Project."
-    href: "https://www.indiegogo.com/projects/bradley-burgess-the-orgelbuchlein/"
+    href: "/ob"
   - text: "Listen to or watch music."
     href: "#section-music"
   - text: "Learn about teaching."
