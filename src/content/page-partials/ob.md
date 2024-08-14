@@ -5,12 +5,16 @@ the course of 2023. This project continued into 2024, and now I've decided to
 record the complete set! Please watch the above video for more information and
 to get a feel for the project.
 
-I ran an [Indiegogo
-fundraiser](https://www.indiegogo.com/projects/bradley-burgess-the-orgelbuchlein#/)
-campaign to cover the costs of recording the album. The Indiegogo has come to
-an end. I didn't quite reach the goal that I had for the campaign, however, so
-I am still The Indiegogo fundraising campaign has come to an end. I didn't
-quite reach the goal that I had for the campaign, however, so I am still
-accepting donations via Venmo. If you are able to contribute, that would be
-most appreciated! accepting donations via Venmo. If you are able to contribute,
-that would be most appreciated!
+The album will be produced under the
+[RavenCD](https://www.ravencd.com/merchantmanager/index.php) label. To help
+cover the costs of the recording, I ran an [Indiegogo fundraiser
+campaign](https://www.indiegogo.com/projects/bradley-burgess-the-orgelbuchlein#/),
+which has now come to an end. We didn't quite reach the goal, however, and so
+*I am still accepting donations via Venmo.* If you are able to contribute, your
+donation would be much appreciated, and go directly towards covering the
+project expenses: travel, accommodation, recording engineer, editing, and
+physical production. (You can find a breakdown of expenses at the Indiegogo
+page.)
+
+Once the album has been released, it will be available for purchase (CD and
+digital) and streaming on all major platforms.
