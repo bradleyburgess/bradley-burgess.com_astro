@@ -15,6 +15,7 @@ export const mainNavList = [
   { name: "bio", href: "/#section-bio" },
   { name: "music", href: "/#section-music" },
   { name: "teaching", href: "/#section-teaching" },
+  { name: "album", href: "/ob" },
   // { name: "shop", href: "/shop" },
   // { name: "blog", href: "/blog" },
   { name: "contact", href: "/#section-contact" },
