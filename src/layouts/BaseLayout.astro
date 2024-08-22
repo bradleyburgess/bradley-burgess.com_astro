@@ -61,6 +61,22 @@ const reEndSlash = new RegExp("/$")
         display: none;
       }
     </style>
+  <script>
+    (() => {
+      const announcement = document.getElementById("announcement");
+      const hasSeenIndiegogo2024 = window.localStorage.getItem("hasSeenIndiegogo2024")
+      if (hasSeenIndiegogo2024) {
+        const now = new Date()
+        const seenDate = new Date(hasSeenIndiegogo2024)
+        const difference = now.getTime() - seenDate.getTime()
+        const days = difference / 1000 / 60 / 60 / 24
+        if (days < 14) {
+          announcement?.classList.add('hidden');
+          announcement?.remove();
+        }
+      }
+    })()
+  </script>
   </head>
   <body class="flex min-h-full flex-col overflow-x-clip">
     {
@@ -188,9 +204,22 @@ const reEndSlash = new RegExp("/$")
       (() => {
         const announcement = document.getElementById("announcement");
         announcement?.querySelector("button")?.addEventListener("click", () => {
-          window.localStorage.setItem("hasSeenIndiegogo2024", "true");
+          window.localStorage.setItem("hasSeenIndiegogo2024", new Date().toString());
           announcement.remove();
         });
+
+        // window.addEventListener('load', () => {
+        //   const hasSeenIndiegogo2024 = window.localStorage.getItem("hasSeenIndiegogo2024")
+        //   if (hasSeenIndiegogo2024) {
+        //     const now = new Date()
+        //     const seenDate = new Date(hasSeenIndiegogo2024)
+        //     const difference = now.getTime() - seenDate.getTime()
+        //     const days = difference / 1000 / 60 / 60 / 24
+        //     if (difference < 14) {
+        //       announcement?.remove()
+        //     }
+        //   }
+        // })
       })();
     </script>
   </body>
