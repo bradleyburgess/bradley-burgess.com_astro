@@ -2,12 +2,10 @@
 import Layout from "../layouts/BaseLayout.astro";
 import YouTubeEmbed from "../components/YouTubeEmbed";
 import { Image } from "astro:assets";
+import FancyHR from "../components/FancyHR";
 
 import { Content } from "../content/page-partials/ob.md";
-import QRCode from "../assets/img/qr-code-venmo.png";
-
-const VENMO_LINK =
-  "https://venmo.com/?txn=pay&audience=private&recipients=bradleyburgess@gmail.com&note=Orgelb%C3%BCchlein%20Fundraiser";
+import OBCover from "../assets/img/ob-cover.png";
 ---
 
 <Layout
@@ -22,6 +20,24 @@ const VENMO_LINK =
         The Orgelbüchlein Project
       </h1>
     </div>
+    <div class="mx-auto grid max-w-[65ch] lg:grid-cols-2 lg:gap-4">
+      <div class="full-bleed">
+        <Image src={OBCover} alt="" />
+      </div>
+      <div class="lg:flex lg:items-center lg:justify-center lg:p-10">
+        <a
+          href="https://ravencd.com/merchantmanager/product_info.php?products_id=381"
+          class="rounded-full border-2 border-white bg-white px-4 py-2 font-alternate text-xl font-bold text-gray-950 transition-colors duration-300 ease-in-out hover:bg-gray-950 hover:text-white"
+          >Buy from RavenCD</a
+        >
+      </div>
+    </div>
+    <div class="prose prose-gray prose-invert mx-auto">
+      <Content />
+    </div>
+    <div class="prose mx-auto w-full">
+      <FancyHR />
+    </div>
     <div class="mx-auto lg:w-[65ch]">
       <div class="full-bleed w-full">
         <YouTubeEmbed
@@ -30,21 +46,6 @@ const VENMO_LINK =
           client:only="preact"
         />
       </div>
-    </div>
-    <div class="prose prose-gray prose-invert mx-auto">
-      <Content />
-    </div>
-    <div class="flex flex-col items-center justify-center gap-10 md:flex-row">
-      <div class="max-w-72">
-        <a href={VENMO_LINK}>
-          <Image src={QRCode} alt="Venmo me" />
-        </a>
-      </div>
-      <a
-        href={VENMO_LINK}
-        class="rounded-full border-2 border-gray-100 bg-gray-100 px-6 py-2 font-bold uppercase text-gray-900 transition-colors duration-150 ease-in-out hover:bg-gray-900 hover:text-gray-100"
-        >Donate via Venmo</a
-      >
     </div>
   </section>
 </Layout>
