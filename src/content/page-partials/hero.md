@@ -3,7 +3,7 @@ image:
   src: ../../assets/img/bradley/bradley-brick.jpg
   alt: Bradley, looking at the camera, sitting in front of an open-face red-brick wall
 cta:
-  - text: "Buy my album"
+  - text: "Buy my album."
     href: "https://ravencd.com/merchantmanager/product_info.php?products_id=381"
   - text: "Listen to or watch music."
     href: "#section-music"
