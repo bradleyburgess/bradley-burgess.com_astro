@@ -5,7 +5,7 @@ import { Image } from "astro:assets";
 import FancyHR from "../components/FancyHR";
 
 import { Content } from "../content/page-partials/ob.md";
-import OBCover from "../assets/img/ob-cover.png";
+import ImageOBCover from "../assets/img/ob-cover.png";
 ---
 
 <Layout
@@ -22,9 +22,17 @@ import OBCover from "../assets/img/ob-cover.png";
     </div>
     <div class="mx-auto grid max-w-[65ch] lg:grid-cols-2 lg:gap-4">
       <div class="full-bleed">
-        <Image src={OBCover} alt="" />
+        <Image 
+           src={ImageOBCover}
+           alt="" 
+          loading="eager"
+          class="sticky top-0"
+          widths={[300, 600, 800, 1000, 1200, 1600]}
+          sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 800px, 300px"
+          fetchpriority="high"
+        />
       </div>
-      <div class="lg:flex lg:items-center lg:justify-center lg:p-10">
+      <div class="my-16 lg:my-0 flex justify-center  lg:items-center lg:p-10">
         <a
           href="https://ravencd.com/merchantmanager/product_info.php?products_id=381"
           class="rounded-full border-2 border-white bg-white px-4 py-2 font-alternate text-xl font-bold text-gray-950 transition-colors duration-300 ease-in-out hover:bg-gray-950 hover:text-white"
