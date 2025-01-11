@@ -11,6 +11,7 @@ import MediaPlayer from "../components/MediaPlayer";
 import ContactForm from "../components/ContactForm";
 import InfoIcon from "../components/InfoIcon.astro";
 import SocialLinks from "../components/SocialLinks";
+import IndexExtraFooter from "../components/IndexExtraFooter.astro";
 
 import getSeparateFirstWord from "../lib/getSeparateFirstWord";
 
@@ -23,12 +24,10 @@ import { Content as MusicContent } from "../content/page-partials/music.md";
 import { Content as TeachingContent } from "../content/page-partials/teaching.mdx";
 import { Content as ContactContent } from "../content/page-partials/contact.mdx";
 
-// import ImageBradleyBrick from "../assets/img/bradley/bradley-brick.jpg";
-import ImageBradleyBW from "../assets/img/bradley/bradley-bw.jpg";
-import ImageBradleyNew from "../assets/img/bradley/bradley-new.jpg";
-// import ImageBradleyHeadshot from "../assets/img/bradley/bradley-headshot4.jpg";
-import ImageBradleyHands from "../assets/img/bradley/bradley-manuals.jpg";
-import ImageBradleyOutside from "../assets/img/bradley/bradley-outside.jpg";
+import ImageStMOrgan from "../assets/img/bradley/st-michaels/bradley-organ-smiling.jpg";
+import ImageBradleyAbove from "../assets/img/bradley/st-michaels/bradley-above.jpg";
+import ImageBradleyHands from "../assets/img/bradley/st-michaels/bradley-hands.jpg";
+import ImageBradleyHeadshot from "../assets/img/bradley/st-michaels/bradley-headshot.jpg";
 
 type TCta = {
   text: string;
@@ -65,8 +64,8 @@ const audioList = await Promise.all(
     <section class="container grid gap-10 lg:grid-cols-2">
       <div class="full-bleed">
         <Image
-          src={ImageBradleyBW}
-          alt="Bradley, seated and smiling, looking at the camera, with his left arm leaning on the piano"
+          src={ImageStMOrgan}
+          alt="Bradley, seated at the organ, smiling at the camera"
           loading="eager"
           class="sticky top-0"
           widths={[300, 600, 800, 1000, 1200, 1600]}
@@ -136,8 +135,8 @@ const audioList = await Promise.all(
       </div>
       <div class="full-bleed">
         <Image
-          src={ImageBradleyNew}
-          alt="Bradey, seated and smiling at the camera."
+          src={ImageBradleyAbove}
+          alt="Close-up of Bradley's hands at the piano"
           class="sticky top-0 lg:top-20"
           widths={[300, 600, 800, 1000, 1200, 1600]}
           sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 40vw, 1200px"
@@ -269,7 +268,7 @@ const audioList = await Promise.all(
       </div>
       <div class="full-bleed">
         <Image
-          src={ImageBradleyOutside}
+          src={ImageBradleyHeadshot}
           widths={[300, 600, 800, 1000, 1200, 1600]}
           sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 40vw, 1200px"
           alt="Bradley sitting outisde wearing sunglasses, looking to the side."
