@@ -11,9 +11,10 @@ import "../assets/css/base.css";
 interface Props {
   description?: string;
   title?: string;
+  photoFooter?: boolean;
 }
 
-const { description, title } = Astro.props;
+const { description, title, photoFooter } = Astro.props;
 
 const pageTitle = title
   ? `${title} | ${siteTitle}`
@@ -124,11 +125,17 @@ const reEndSlash = new RegExp("/$")
     <main class="grow">
       <slot />
     </main>
-    <footer class="mt-20">
-      <div class="py-2 lg:py-4">
-        <p class="text-center">
+    <footer class="mt-20 lg:mb-2">
+      <div class="mx-auto py-2 lg:py-4 prose prose-invert prose-gray prose-p:text-center prose-p:my-0">
+        <p>
           Copyright © {new Date().getFullYear()}. {siteTitle}.
         </p>
+        {photoFooter && (
+          <p>
+            Photos by <a class="underline" href="https://www.hntrphoto.com/">HNTRGraphy</a>.
+          </p>
+          )
+        }
       </div>
     </footer>
     <script>

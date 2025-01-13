@@ -11,7 +11,6 @@ import MediaPlayer from "../components/MediaPlayer";
 import ContactForm from "../components/ContactForm";
 import InfoIcon from "../components/InfoIcon.astro";
 import SocialLinks from "../components/SocialLinks";
-import IndexExtraFooter from "../components/IndexExtraFooter.astro";
 
 import getSeparateFirstWord from "../lib/getSeparateFirstWord";
 
@@ -58,7 +57,7 @@ const audioList = await Promise.all(
 );
 ---
 
-<Layout>
+<Layout photoFooter>
   <div class="grid gap-32 lg:gap-48 xl:gap-56">
     <!-- HERO BLURB SECTION --------------------------------------------------------------------------------- -->
     <section class="container grid gap-10 lg:grid-cols-2">
