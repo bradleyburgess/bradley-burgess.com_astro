@@ -18,6 +18,11 @@ export default {
         soundwave: "url('/img/background/soundwave.png')",
         filmstrip: "url('/img/background/filmstrip.png')",
       },
+      colors: {
+        spotify: "#1ED760",
+        appleMusic: "#FF4E6B",
+        youtube: "#FF0000",
+      },
       fontFamily: {
         sans: [
           '"Open Sans Variable"',

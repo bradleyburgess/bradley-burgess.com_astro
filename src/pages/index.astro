@@ -11,6 +11,10 @@ import MediaPlayer from "../components/MediaPlayer";
 import ContactForm from "../components/ContactForm";
 import InfoIcon from "../components/InfoIcon.astro";
 import SocialLinks from "../components/SocialLinks";
+import YouTubeIcon from "../components/YouTubeIcon";
+import SpotifyIcon from "../components/SpotifyIcon";
+import MusicIcon from "../components/MusicIcon";
+import CDIcon from "../components/CDIcon";
 
 import getSeparateFirstWord from "../lib/getSeparateFirstWord";
 
@@ -19,14 +23,15 @@ import {
   Content as HeroContent,
 } from "../content/page-partials/hero.md";
 import { Content as BioContent } from "../content/page-partials/bio.mdx";
-import { Content as MusicContent } from "../content/page-partials/music.md";
 import { Content as TeachingContent } from "../content/page-partials/teaching.mdx";
 import { Content as ContactContent } from "../content/page-partials/contact.mdx";
+import { Content as AlbumContent } from "../content/page-partials/album.mdx";
 
 import ImageStMOrgan from "../assets/img/bradley/st-michaels/bradley-organ-smiling.jpg";
 import ImageBradleyAbove from "../assets/img/bradley/st-michaels/bradley-above.jpg";
 import ImageBradleyHands from "../assets/img/bradley/st-michaels/bradley-hands.jpg";
 import ImageBradleyHeadshot from "../assets/img/bradley/st-michaels/bradley-headshot.jpg";
+import ImageOBCover from "../assets/img/ob-cover.png";
 
 type TCta = {
   text: string;
@@ -36,24 +41,24 @@ type TCta = {
 const testimonialsList = await getCollection("testimonials");
 
 const allVideoTracks = (await getCollection("video-tracks")).filter(
-  (item) => !item.data.exclude
+  (item) => !item.data.exclude,
 );
 const allAudioTracks = (await getCollection("audio-tracks")).filter(
-  (item) => !item.data.exclude
+  (item) => !item.data.exclude,
 );
 const videoList = await Promise.all(
   allVideoTracks.map(async (item) => {
     const { data } = item;
     const content = await marked.parse(item.body);
     return { ...data, list: "video-tracks", notes: content };
-  })
+  }),
 );
 const audioList = await Promise.all(
   allAudioTracks.map(async (item) => {
     const { data } = item;
     const content = await marked.parse(item.body);
     return { ...data, list: "audio-tracks", notes: content };
-  })
+  }),
 );
 ---
 
@@ -143,137 +148,200 @@ const audioList = await Promise.all(
       </div>
     </section>
 
-    <!-- MUSIC SECTION -------------------------------------------------------------------------------------- -->
-    <section class="container grid" id="section-music">
+    <!-- ALBUM SECTION -------------------------------------------------------------------------------------- -->
+    <section class="container grid" id="section-album">
       <div class="">
         <div class="grid gap-y-10">
           <div
             class="prose prose-gray prose-invert prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
           >
-            <MusicContent />
+            <h2>Album.</h2>
           </div>
-          <js-fallback>
-            <div
-              class="prose prose-gray prose-invert rounded-2xl bg-gray-800 p-2 px-4 text-red-500"
-            >
-              <p>
-                <span
-                  class="relative top-[0.15em] mr-1 inline-block aspect-square w-4"
-                  ><InfoIcon /></span
-                >
-                The Media Player requires Javascript. Please go to my YouTube channel
-                for videos.
-              </p>
+          <div class="mx-auto grid lg:grid-cols-6 lg:gap-4">
+            <div class="full-bleed lg:col-span-2">
+              <Image
+                src={ImageOBCover}
+                alt=""
+                widths={[300, 600, 800, 1000, 1200, 1600]}
+                sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 40vw, 1200px"
+                fetchpriority="high"
+              />
             </div>
-          </js-fallback>
-          <MediaPlayer
-            playlists={[
-              { heading: "Video Tracks.", playlist: videoList },
-              { heading: "Audio Tracks.", playlist: audioList },
-            ]}
-            client:idle
-            client:only="preact"
+            <div class="lg:col-span-4">
+              <div class="py-10 lg:px-20">
+                <div class="prose prose-gray prose-invert">
+                  <AlbumContent />
+                </div>
+                <div
+                  class="flex flex-wrap gap-8 lg:my-0 lg:items-center py-10"
+                >
+                  <a
+                    href="https://ravencd.com/merchantmanager/product_info.php?products_id=381"
+                    class="flex items-center gap-2 rounded-full border-2 border-white bg-white px-4 py-2 font-alternate text-lg font-bold text-gray-950 transition-colors duration-300 ease-in-out hover:bg-gray-950 hover:text-white"
+                    ><span class="inline-block w-5"><CDIcon /></span>Buy from RavenCD</a
+                  >
+                  <a
+                    href="https://open.spotify.com/album/6mS3gueOkxGS8f6vsd3cOW"
+                    class="border-spotify bg-spotify flex items-center gap-2 rounded-full border-2 px-4 py-2 font-alternate text-lg font-bold text-gray-950 transition-colors duration-300 ease-in-out hover:border-white hover:bg-gray-950 hover:fill-white hover:text-white"
+                    ><span class="inline-block w-5"><SpotifyIcon /></span>Stream
+                    on Spotify</a
+                  >
+                  <a
+                    href="https://music.apple.com/us/album/j-s-bach-orgelb%C3%BCchlein-bradley-burgess-organist/1790286587"
+                    class="flex gap-2 items-center border-appleMusic bg-appleMusic rounded-full border-2 px-4 py-2 font-alternate text-lg font-bold text-gray-950 transition-colors duration-300 ease-in-out hover:border-white hover:bg-gray-950 hover:text-white"
+                    ><span class="inline-block w-4"><MusicIcon /></span>Stream on Apple Music</a
+                  >
+                  <a
+                    href="https://music.youtube.com/playlist?list=OLAK5uy_ludME76CruB0LqE3bM-Y6J5pBJ_fSCriY"
+                    class="flex gap-2 items-center border-youtube bg-youtube rounded-full border-2 px-4 py-2 font-alternate text-lg font-bold text-gray-950 transition-colors duration-300 ease-in-out hover:border-white hover:bg-gray-950 hover:text-white"
+                    ><span class="inline-block w-5"><YouTubeIcon /></span>Stream on YouTube Music</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+      <!-- TRACKS SECTION -------------------------------------------------------------------------------------- -->
+      <section class="container grid" id="section-tracks">
+        <div class="">
+          <div class="grid gap-y-10">
+            <div
+              class="prose prose-gray prose-invert prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
+            >
+              <h2>Tracks.</h2>
+            </div>
+            <js-fallback>
+              <div
+                class="prose prose-gray prose-invert rounded-2xl bg-gray-800 p-2 px-4 text-red-500"
+              >
+                <p>
+                  <span
+                    class="relative top-[0.15em] mr-1 inline-block aspect-square w-4"
+                    ><InfoIcon /></span
+                  >
+                  The Media Player requires Javascript. Please go to my YouTube channel
+                  for videos.
+                </p>
+              </div>
+            </js-fallback>
+            <MediaPlayer
+              playlists={[
+                { heading: "Video Tracks.", playlist: videoList },
+                { heading: "Audio Tracks.", playlist: audioList },
+              ]}
+              client:idle
+              client:only="preact"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- TEACHING SECTION ----------------------------------------------------------------------------------- -->
+      <section
+        class="container grid gap-10 lg:grid-cols-2"
+        id="section-teaching"
+      >
+        <div class="full-bleed order-2 lg:order-1">
+          <Image
+            src={ImageBradleyHands}
+            alt="Close-up of Bradley's hands, playing on two different organ manuals"
+            class="sticky top-10"
+            widths={[300, 600, 800, 1000, 1200, 1600]}
+            sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 40vw, 1200px"
           />
         </div>
-      </div>
-    </section>
-
-    <!-- TEACHING SECTION ----------------------------------------------------------------------------------- -->
-    <section class="container grid gap-10 lg:grid-cols-2" id="section-teaching">
-      <div class="full-bleed order-2 lg:order-1">
-        <Image
-          src={ImageBradleyHands}
-          alt="Close-up of Bradley's hands, playing on two different organ manuals"
-          class="sticky top-10"
-          widths={[300, 600, 800, 1000, 1200, 1600]}
-          sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 40vw, 1200px"
-        />
-      </div>
-      <div class="order-1 lg:order-2 lg:p-10">
-        <div
-          class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:mt-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
-        >
-          <div>
-            <TeachingContent />
-          </div>
-        </div>
-        <div class="mt-10 rounded-xl bg-gray-900 p-4">
-          <h3
-            class="relative text-center font-alternate text-xl font-normal text-gray-200 after:absolute after:-bottom-6 after:left-0 after:h-px after:w-full after:rounded-full after:bg-gray-400 sm:text-2xl"
+        <div class="order-1 lg:order-2 lg:p-10">
+          <div
+            class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:mt-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium"
           >
-            What my students are saying
-          </h3>
-          <ul
-            class="mt-12 flex list-none flex-col items-start gap-10 p-0 md:flex-col md:max-lg:gap-y-14 xl:flex-col 2xl:flex-row"
-          >
-            {
-              testimonialsList.map((item) => (
-                <li class="grid flex-1 gap-y-4 md:gap-x-10 md:max-lg:grid-cols-12">
-                  <div class="flex items-center gap-6 md:max-lg:col-span-3 md:max-lg:flex-col md:max-lg:gap-y-2 md:max-lg:text-center">
-                    <Image
-                      src={item.data.image}
-                      alt=""
-                      width={200}
-                      height={200}
-                      class="aspect-square w-16 rounded-full"
-                    />
-                    <p class="flex flex-col gap-1 leading-3">
-                      <span class="font-alternate font-semibold">
-                        {item.data.name}
-                      </span>
-                      <span class="text-xs text-gray-400">
-                        {item.data.lessonType}
-                      </span>
-                    </p>
-                  </div>
-                  <p class="prose-invert-prose-gray prose text-sm italic text-gray-300 md:max-lg:col-span-9">
-                    {item.data.body}
-                  </p>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT SECTION ------------------------------------------------------------------------------------ -->
-    <section class="container grid gap-10 lg:grid-cols-2" id="section-contact">
-      <div>
-        <div
-          class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:mt-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium lg:p-10 lg:pl-0"
-        >
-          <div>
-            <ContactContent />
-          </div>
-          <js-fallback>
-            <div
-              class="prose prose-gray prose-invert rounded-2xl bg-gray-800 p-2 px-4 text-red-500"
-            >
-              <p>
-                <span
-                  class="relative top-[0.15em] mr-1 inline-block aspect-square w-4"
-                  ><InfoIcon /></span
-                >
-                <span
-                  >To prevent spam, the contact form requires Javascript. Please
-                  enable Javascript, or contact me via Telegram.</span
-                >
-              </p>
+            <div>
+              <TeachingContent />
             </div>
-          </js-fallback>
-          <ContactForm client:load client:only="preact" />
+          </div>
+          <div class="mt-10 rounded-xl bg-gray-900 p-4">
+            <h3
+              class="relative text-center font-alternate text-xl font-normal text-gray-200 after:absolute after:-bottom-6 after:left-0 after:h-px after:w-full after:rounded-full after:bg-gray-400 sm:text-2xl"
+            >
+              What my students are saying
+            </h3>
+            <ul
+              class="mt-12 flex list-none flex-col items-start gap-10 p-0 md:flex-col md:max-lg:gap-y-14 xl:flex-col 2xl:flex-row"
+            >
+              {
+                testimonialsList.map((item) => (
+                  <li class="grid flex-1 gap-y-4 md:gap-x-10 md:max-lg:grid-cols-12">
+                    <div class="flex items-center gap-6 md:max-lg:col-span-3 md:max-lg:flex-col md:max-lg:gap-y-2 md:max-lg:text-center">
+                      <Image
+                        src={item.data.image}
+                        alt=""
+                        width={200}
+                        height={200}
+                        class="aspect-square w-16 rounded-full"
+                      />
+                      <p class="flex flex-col gap-1 leading-3">
+                        <span class="font-alternate font-semibold">
+                          {item.data.name}
+                        </span>
+                        <span class="text-xs text-gray-400">
+                          {item.data.lessonType}
+                        </span>
+                      </p>
+                    </div>
+                    <p class="prose-invert-prose-gray prose text-sm italic text-gray-300 md:max-lg:col-span-9">
+                      {item.data.body}
+                    </p>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="full-bleed">
-        <Image
-          src={ImageBradleyHeadshot}
-          widths={[300, 600, 800, 1000, 1200, 1600]}
-          sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 40vw, 1200px"
-          alt="Bradley sitting outisde wearing sunglasses, looking to the side."
-          class="sticky top-0"
-        />
-      </div>
+      </section>
+
+      <!-- CONTACT SECTION ------------------------------------------------------------------------------------ -->
+      <section
+        class="container grid gap-10 lg:grid-cols-2"
+        id="section-contact"
+      >
+        <div>
+          <div
+            class="prose prose-gray prose-invert grid gap-y-10 pl-0 prose-h2:mt-0 prose-h2:font-alternate prose-h2:text-4xl prose-h2:font-medium lg:p-10 lg:pl-0"
+          >
+            <div>
+              <ContactContent />
+            </div>
+            <js-fallback>
+              <div
+                class="prose prose-gray prose-invert rounded-2xl bg-gray-800 p-2 px-4 text-red-500"
+              >
+                <p>
+                  <span
+                    class="relative top-[0.15em] mr-1 inline-block aspect-square w-4"
+                    ><InfoIcon /></span
+                  >
+                  <span
+                    >To prevent spam, the contact form requires Javascript.
+                    Please enable Javascript, or contact me via Telegram.</span
+                  >
+                </p>
+              </div>
+            </js-fallback>
+            <ContactForm client:load client:only="preact" />
+          </div>
+        </div>
+        <div class="full-bleed">
+          <Image
+            src={ImageBradleyHeadshot}
+            widths={[300, 600, 800, 1000, 1200, 1600]}
+            sizes="(max-width: 1024px) 100vw, (max-width: 1546px) 40vw, 1200px"
+            alt="Bradley sitting outisde wearing sunglasses, looking to the side."
+            class="sticky top-0"
+          />
+        </div>
+      </section>
     </section>
   </div>
 </Layout>

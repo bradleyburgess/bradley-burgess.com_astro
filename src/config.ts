@@ -13,9 +13,9 @@ export const siteDescription =
 
 export const mainNavList = [
   { name: "bio", href: "/#section-bio" },
-  { name: "music", href: "/#section-music" },
+  { name: "album", href: "/#section-album" },
+  { name: "tracks", href: "/#section-tracks" },
   { name: "teaching", href: "/#section-teaching" },
-  { name: "album", href: "/ob" },
   // { name: "shop", href: "/shop" },
   // { name: "blog", href: "/blog" },
   { name: "contact", href: "/#section-contact" },
@@ -28,7 +28,15 @@ type TContactLink = {
   color: string;
 };
 
-type TSocialMediaNetwork = "TikTok" | "Telegram" | "YouTube";
+export type TSocialMediaNetwork = "TikTok" | "Telegram" | "YouTube";
+export type TStreamingPlatform = "Spotify" | "Youtube Music" | "Apple Music";
+
+export type TStreamingLink = {
+  platform: TStreamingPlatform;
+  link: string;
+  color: string;
+  label: string;
+}
 
 export const contactLinks: TContactLink[] = [
   {
