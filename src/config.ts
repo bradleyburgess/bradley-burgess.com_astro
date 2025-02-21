@@ -29,7 +29,7 @@ type TContactLink = {
 };
 
 export type TSocialMediaNetwork =
-  | "AppleMusic"
+  | "Apple Music"
   | "Spotify"
   | "Telegram"
   | "TikTok"
@@ -57,7 +57,7 @@ export const contactLinks: TContactLink[] = [
     color: "#FF0000",
   },
   {
-    name: "AppleMusic",
+    name: "Apple Music",
     handle: "",
     link: "https://music.apple.com/us/album/j-s-bach-orgelb%C3%BCchlein-bradley-burgess-organist/1790286587",
     color: "#FF4E6B",
