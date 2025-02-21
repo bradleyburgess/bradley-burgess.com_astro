@@ -28,7 +28,12 @@ type TContactLink = {
   color: string;
 };
 
-export type TSocialMediaNetwork = "TikTok" | "Telegram" | "YouTube";
+export type TSocialMediaNetwork =
+  | "AppleMusic"
+  | "Spotify"
+  | "Telegram"
+  | "TikTok"
+  | "YouTube";
 export type TStreamingPlatform = "Spotify" | "Youtube Music" | "Apple Music";
 
 export type TStreamingLink = {
@@ -36,9 +41,15 @@ export type TStreamingLink = {
   link: string;
   color: string;
   label: string;
-}
+};
 
 export const contactLinks: TContactLink[] = [
+  {
+    name: "Spotify",
+    handle: "3Aw9EUZeowrpaCpQ2Ry8D6",
+    link: "https://open.spotify.com/album/6mS3gueOkxGS8f6vsd3cOW",
+    color: "#1ed760",
+  },
   {
     name: "YouTube",
     handle: "@bburgess_keys",
@@ -46,11 +57,18 @@ export const contactLinks: TContactLink[] = [
     color: "#FF0000",
   },
   {
+    name: "AppleMusic",
+    handle: "",
+    link: "https://music.apple.com/us/album/j-s-bach-orgelb%C3%BCchlein-bradley-burgess-organist/1790286587",
+    color: "#FF4E6B",
+  },
+  {
     name: "TikTok",
     handle: "@bburgess_keys",
     link: "https://www.tiktok.com/@bburgess_keys",
     color: "#DE8C9D",
   },
+
   {
     name: "Telegram",
     handle: "@bburgess_keys",

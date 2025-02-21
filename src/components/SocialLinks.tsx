@@ -1,17 +1,21 @@
-import YouTubeIcon from "./YouTubeIcon";
+import MusicIcon from "./MusicIcon";
+import SpotifyIcon from "./SpotifyIcon";
 import TelegramIcon from "./TelegramIcon";
 import TikTokIcon from "./TikTokIcon";
+import YouTubeIcon from "./YouTubeIcon";
 
 import { contactLinks } from "../config";
 
 const socialsMap = {
-  YouTube: <YouTubeIcon />,
-  TikTok: <TikTokIcon />,
+  AppleMusic: <MusicIcon />,
+  Spotify: <SpotifyIcon />,
   Telegram: <TelegramIcon />,
+  TikTok: <TikTokIcon />,
+  YouTube: <YouTubeIcon />,
 };
 
 const SocialLinks = () => (
-  <ul className="mt-14 flex justify-center gap-6 lg:justify-start">
+  <ul className="mt-14 flex flex-wrap justify-center gap-6 px-10 lg:justify-start lg:px-0">
     {contactLinks.map((item) => (
       <li style={{ "--brand-color": item.color }}>
         <a href={item.link}>
