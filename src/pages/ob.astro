@@ -6,6 +6,7 @@ import FancyHR from "../components/FancyHR";
 
 import { Content } from "../content/page-partials/ob.md";
 import ImageOBCover from "../assets/img/ob-cover.png";
+import AlbumStreaming from "@components/AlbumStreaming.astro";
 ---
 
 <Layout
@@ -20,11 +21,11 @@ import ImageOBCover from "../assets/img/ob-cover.png";
         The Orgelbüchlein Project
       </h1>
     </div>
-    <div class="mx-auto grid max-w-[65ch] lg:grid-cols-2 lg:gap-4">
+    <div class="mx-auto grid max-w-[65ch] lg:grid-cols-2 lg:gap-6">
       <div class="full-bleed">
-        <Image 
-           src={ImageOBCover}
-           alt="" 
+        <Image
+          src={ImageOBCover}
+          alt=""
           loading="eager"
           class="sticky top-0"
           widths={[300, 600, 800, 1000, 1200, 1600]}
@@ -32,12 +33,8 @@ import ImageOBCover from "../assets/img/ob-cover.png";
           fetchpriority="high"
         />
       </div>
-      <div class="my-16 lg:my-0 flex justify-center  lg:items-center lg:p-10">
-        <a
-          href="https://ravencd.com/merchantmanager/product_info.php?products_id=381"
-          class="rounded-full border-2 border-white bg-white px-4 py-2 font-alternate text-xl font-bold text-gray-950 transition-colors duration-300 ease-in-out hover:bg-gray-950 hover:text-white"
-          >Buy from RavenCD</a
-        >
+      <div class="flex items-center justify-center py-10 lg:py-0">
+        <AlbumStreaming />
       </div>
     </div>
     <div class="prose prose-gray prose-invert mx-auto">

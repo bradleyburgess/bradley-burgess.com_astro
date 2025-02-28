@@ -1,7 +1,3 @@
-import TelegramIcon from "./components/TelegramIcon";
-import YouTubeIcon from "./components/YouTubeIcon";
-import TikTokIcon from "./components/TikTokIcon";
-
 export const siteTitle = "Bradley Burgess";
 
 export const siteTagline = "pianist & organist";
@@ -30,6 +26,7 @@ type TContactLink = {
 
 export type TSocialMediaNetwork =
   | "Apple Music"
+  | "BlueSky"
   | "Spotify"
   | "Telegram"
   | "TikTok"
@@ -63,12 +60,17 @@ export const contactLinks: TContactLink[] = [
     color: "#FF4E6B",
   },
   {
+    name: "BlueSky",
+    handle: "@bburgesskeys.bsky.social",
+    link: "https://bsky.app/profile/bburgesskeys.bsky.social",
+    color: "#1185fe",
+  },
+  {
     name: "TikTok",
     handle: "@bburgess_keys",
     link: "https://www.tiktok.com/@bburgess_keys",
     color: "#DE8C9D",
   },
-
   {
     name: "Telegram",
     handle: "@bburgess_keys",
